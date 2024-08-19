@@ -72,7 +72,7 @@ function AarcProvider({ children }) {
     destination: {
       chainId: chainId || 1,
       walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-      // tokenAddress: "0x0000000000000000000000000000000000000000",
+      tokenAddress: "0x0000000000000000000000000000000000000000",
       requestedAmount: 10,
       // contract: {
       //     contractAddress: "0x94De497a5E88Da7bc522a8203100f99Dd6e6171e",

@@ -189,7 +189,7 @@ export default function SwapBox(props) {
   const history = useHistory();
   const localizedSwapLabels = useLocalizedMap(SWAP_LABELS);
   const localizedOrderOptionLabels = useLocalizedMap(ORDER_OPTION_LABELS);
-  const { openModal, setOpenModal, client, setDepositAmount } = useModal()
+  const { openModal, setOpenModal, client, setDepositAmount, updateDestinationTokenWithAddress } = useModal()
 
   let allowedSlippage = savedSlippageAmount;
   if (isHigherSlippageAllowed) {
@@ -1675,9 +1675,9 @@ export default function SwapBox(props) {
       return;
     }
 
-    client.updateDestinationToken(fromTokenAddress);
-
     console.log("toTokenAddress", fromTokenAddress);
+  //  await client.updateDestinationTokenWithAddress(fromTokenAddress, chainId);
+
     setOpenModal(true);
 
 
