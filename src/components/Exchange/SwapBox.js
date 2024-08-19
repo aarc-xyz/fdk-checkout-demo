@@ -1960,6 +1960,7 @@ export default function SwapBox(props) {
   function renderPrimaryButton() {
     const [errorMessage, errorType, errorCode] = getError();
     const primaryTextMessage = getPrimaryText();
+    console.log(primaryTextMessage, "primaryTextMessage")
     if (errorType === ErrorDisplayType.Tooltip && errorMessage === primaryTextMessage && ERROR_TOOLTIP_MSG[errorCode]) {
       return (
         <Tooltip
