@@ -1639,6 +1639,12 @@ export default function SwapBox(props) {
 
   const onClickPrimary = () => {
 
+
+    if (!active) {
+      openConnectModal();
+      return;
+    }
+
     client.updateDestinationToken(fromTokenAddress);
     console.log("toTokenAddress", fromTokenAddress);
     setOpenModal(true);
@@ -1649,10 +1655,7 @@ export default function SwapBox(props) {
     //   return;
     // }
 
-    // if (!active) {
-    //   openConnectModal();
-    //   return;
-    // }
+
 
     // if (needPositionRouterApproval) {
     //   approvePositionRouter({
