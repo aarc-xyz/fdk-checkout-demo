@@ -189,12 +189,14 @@ export default function SwapBox(props) {
   const history = useHistory();
   const localizedSwapLabels = useLocalizedMap(SWAP_LABELS);
   const localizedOrderOptionLabels = useLocalizedMap(ORDER_OPTION_LABELS);
-  const { openModal, setOpenModal, client } = useModal()
+  const { openModal, setOpenModal, client, setDepositAmount } = useModal()
 
   let allowedSlippage = savedSlippageAmount;
   if (isHigherSlippageAllowed) {
     allowedSlippage = DEFAULT_HIGHER_SLIPPAGE_AMOUNT;
   }
+
+
 
   const isLong = swapOption === LONG;
   const isShort = swapOption === SHORT;
@@ -364,7 +366,11 @@ export default function SwapBox(props) {
 
   const fromAmount = parseValue(fromValue, fromToken && fromToken.decimals);
   const toAmount = parseValue(toValue, toToken && toToken.decimals);
+  useEffect(() => {
 
+    setDepositAmount(fromValue)
+
+  }, [fromValue])
   const isPotentialWrap = (fromToken.isNative && toToken.isWrapped) || (fromToken.isWrapped && toToken.isNative);
   const isWrapOrUnwrap = isSwap && isPotentialWrap;
   const needApproval =
@@ -1097,13 +1103,13 @@ export default function SwapBox(props) {
 
   const getPrimaryText = () => {
     if (isStopOrder) {
-      return t`Open a position`;
+      return `Open a position`;
     }
     if (!active) {
-      return t`Connect Wallet`;
+      return `Connect Wallet`;
     }
     if (!isSupportedChain(chainId)) {
-      return t`Incorrect Network`;
+      return `Incorrect Network`;
     }
     const [error, errorType] = getError();
     if (error && errorType !== ErrorDisplayType.Modal) {
@@ -1111,33 +1117,33 @@ export default function SwapBox(props) {
     }
 
     if (needPositionRouterApproval && isWaitingForPositionRouterApproval) {
-      return t`Enabling Leverage...`;
+      return `Enabling Leverage...`;
     }
     if (isPositionRouterApproving) {
-      return t`Enabling Leverage...`;
+      return `Enabling Leverage...`;
     }
     if (needPositionRouterApproval) {
-      return t`Enable Leverage`;
+      return `Enable Leverage`;
     }
 
     if (needApproval && isWaitingForApproval) {
-      return t`Waiting for Approval`;
+      return `Waiting for Approval`;
     }
     if (isApproving) {
-      return t`Approving ${fromToken.assetSymbol ?? fromToken.symbol}...`;
+      return `Approving ${fromToken.assetSymbol ?? fromToken.symbol}...`;
     }
     if (needApproval) {
-      return t`Approve ${fromToken.assetSymbol ?? fromToken.symbol}`;
+      return `Approve ${fromToken.assetSymbol ?? fromToken.symbol}`;
     }
 
     if (needOrderBookApproval && isWaitingForPluginApproval) {
-      return t`Enabling Orders...`;
+      return `Enabling Orders...`;
     }
     if (isPluginApproving) {
-      return t`Enabling Orders...`;
+      return `Enabling Orders...`;
     }
     if (needOrderBookApproval) {
-      return t`Enable Orders`;
+      return `Enable Orders`;
     }
 
     if (!isMarketOrder) return t`Create ${orderOption.charAt(0) + orderOption.substring(1).toLowerCase()} Order`;
@@ -1646,6 +1652,7 @@ export default function SwapBox(props) {
     }
 
     client.updateDestinationToken(fromTokenAddress);
+
     console.log("toTokenAddress", fromTokenAddress);
     setOpenModal(true);
 
