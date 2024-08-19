@@ -17,6 +17,9 @@ import { HeaderLink } from "./HeaderLink";
 import useWallet from "lib/wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useTradePageVersion } from "lib/useTradePageVersion";
+import { useModal } from "@aarc-dev/deposit-widget";
+import Button from "components/Button/Button";
+import { useEffect } from "react";
 
 type Props = {
   openSettings: () => void;
@@ -61,7 +64,7 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
   const { openConnectModal } = useConnectModal();
   const showConnectionOptions = !isHomeSite();
   const [tradePageVersion] = useTradePageVersion();
-
+  const { openModal, setOpenModal, client } = useModal()
   const tradeLink = tradePageVersion === 2 ? "/trade" : "/v1";
 
   const selectorLabel = getChainName(chainId);
@@ -97,12 +100,16 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
 
   const accountUrl = getAccountUrl(chainId, account);
 
+  // useEffect(()=>{
+  //   client.update
+  // },[])
+
   return (
     <div className="App-header-user">
       <div data-qa="trade" className={cx("App-header-trade-link")}>
-        <HeaderLink className="default-btn" to={tradeLink!} showRedirectModal={showRedirectModal}>
+        <Button className="default-btn" variant="primary" onClick={() => { setOpenModal(true) }}>
           {isHomeSite() ? <Trans>Launch App</Trans> : <Trans>Trade</Trans>}
-        </HeaderLink>
+        </Button>
       </div>
 
       {showConnectionOptions ? (

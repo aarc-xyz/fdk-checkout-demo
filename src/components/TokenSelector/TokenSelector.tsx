@@ -15,6 +15,7 @@ import { convertToUsd } from "domain/synthetics/tokens";
 import SearchInput from "components/SearchInput/SearchInput";
 import TokenIcon from "components/TokenIcon/TokenIcon";
 import { bigMath } from "lib/bigmath";
+import { useModal } from "@aarc-dev/deposit-widget";
 
 type TokenState = {
   disabled?: boolean;
@@ -46,6 +47,7 @@ export default function TokenSelector(props: Props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   let tokenInfo: TokenInfo | undefined;
+  const { openModal, setOpenModal, client } = useModal()
 
   try {
     tokenInfo = getToken(props.chainId, props.tokenAddress);
@@ -72,6 +74,8 @@ export default function TokenSelector(props: Props) {
   const visibleTokens = tokens.filter((t) => t && !t.isTempHidden);
 
   const onSelectToken = (token) => {
+    console.log(token, "token")
+    client?.updateDestinationToken(token.address)
     setIsModalVisible(false);
     props.onSelectToken(token);
   };

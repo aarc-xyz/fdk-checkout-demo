@@ -90,6 +90,7 @@ import { MAX_METAMASK_MOBILE_DECIMALS } from "config/ui";
 import { useHistory } from "react-router-dom";
 import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
+import { useModal } from "@aarc-dev/deposit-widget";
 
 const SWAP_ICONS = {
   [LONG]: <LongIcon />,
@@ -188,6 +189,7 @@ export default function SwapBox(props) {
   const history = useHistory();
   const localizedSwapLabels = useLocalizedMap(SWAP_LABELS);
   const localizedOrderOptionLabels = useLocalizedMap(ORDER_OPTION_LABELS);
+  const { openModal, setOpenModal, client } = useModal()
 
   let allowedSlippage = savedSlippageAmount;
   if (isHigherSlippageAllowed) {
@@ -393,7 +395,7 @@ export default function SwapBox(props) {
       toTokenInfo?.availableAmount === undefined
         ? undefined
         : toTokenInfo?.availableAmount >
-            (toTokenInfo.poolAmount === undefined ? undefined : toTokenInfo.poolAmount - toTokenInfo.bufferAmount)
+          (toTokenInfo.poolAmount === undefined ? undefined : toTokenInfo.poolAmount - toTokenInfo.bufferAmount)
           ? toTokenInfo.poolAmount - toTokenInfo.bufferAmount
           : toTokenInfo?.availableAmount;
 
@@ -769,7 +771,7 @@ export default function SwapBox(props) {
       fromAmount !== undefined &&
       fromAmount > fromTokenInfo.balance
     ) {
-      return [t`Insufficient ${fromTokenInfo.symbol} balance`];
+      return [t`Deposit ${fromTokenInfo.symbol}`];
     }
 
     const toTokenInfo = getTokenInfo(infoTokens, toTokenAddress);
@@ -852,7 +854,7 @@ export default function SwapBox(props) {
       fromAmount !== undefined &&
       fromAmount > fromTokenInfo.balance
     ) {
-      return [t`Insufficient ${fromTokenInfo.symbol} balance`];
+      return [t`Deposit ${fromTokenInfo.symbol}`];
     }
 
     if (leverage !== undefined && leverage == 0) {
@@ -1233,9 +1235,8 @@ export default function SwapBox(props) {
     callContract(chainId, contract, "deposit", {
       value: fromAmount,
       sentMsg: t`Swap submitted.`,
-      successMsg: t`Swapped ${formatAmount(fromAmount, fromToken.decimals, 4, true)} ${
-        fromToken.symbol
-      } for ${formatAmount(toAmount, toToken.decimals, 4, true)} ${toToken.symbol}!`,
+      successMsg: t`Swapped ${formatAmount(fromAmount, fromToken.decimals, 4, true)} ${fromToken.symbol
+        } for ${formatAmount(toAmount, toToken.decimals, 4, true)} ${toToken.symbol}!`,
       failMsg: t`Swap failed.`,
       setPendingTxns,
     }).finally(() => {
@@ -1250,9 +1251,8 @@ export default function SwapBox(props) {
     callContract(chainId, contract, "withdraw", [fromAmount], {
       sentMsg: t`Swap submitted!`,
       failMsg: t`Swap failed.`,
-      successMsg: t`Swapped ${formatAmount(fromAmount, fromToken.decimals, 4, true)} ${
-        fromToken.symbol
-      } for ${formatAmount(toAmount, toToken.decimals, 4, true)} ${toToken.symbol}!`,
+      successMsg: t`Swapped ${formatAmount(fromAmount, fromToken.decimals, 4, true)} ${fromToken.symbol
+        } for ${formatAmount(toAmount, toToken.decimals, 4, true)} ${toToken.symbol}!`,
       setPendingTxns,
     }).finally(() => {
       setIsSubmitting(false);
@@ -1362,9 +1362,8 @@ export default function SwapBox(props) {
     callContract(chainId, contract, method, params, {
       value,
       sentMsg: t`Swap ${!isMarketOrder ? " order " : ""} submitted!`,
-      successMsg: t`Swapped ${formatAmount(fromAmount, fromToken.decimals, 4, true)} ${
-        fromToken.symbol
-      } for ${formatAmount(toAmount, toToken.decimals, 4, true)} ${toToken.symbol}!`,
+      successMsg: t`Swapped ${formatAmount(fromAmount, fromToken.decimals, 4, true)} ${fromToken.symbol
+        } for ${formatAmount(toAmount, toToken.decimals, 4, true)} ${toToken.symbol}!`,
       failMsg: t`Swap failed.`,
       setPendingTxns,
     })
@@ -1393,10 +1392,10 @@ export default function SwapBox(props) {
     const indexToken = getToken(chainId, indexTokenAddress);
     const successMsg = t`
       Created limit order for ${indexToken.symbol} ${isLong ? "Long" : "Short"}: ${formatAmount(
-        toUsdMax,
-        USD_DECIMALS,
-        2
-      )} USD!
+      toUsdMax,
+      USD_DECIMALS,
+      2
+    )} USD!
     `;
     return Api.createIncreaseOrder(
       chainId,
@@ -1639,55 +1638,61 @@ export default function SwapBox(props) {
   }
 
   const onClickPrimary = () => {
-    if (isStopOrder) {
-      setOrderOption(MARKET);
-      return;
-    }
 
-    if (!active) {
-      openConnectModal();
-      return;
-    }
+    client.updateDestinationToken(fromTokenAddress);
+    console.log("toTokenAddress", fromTokenAddress);
+    setOpenModal(true);
 
-    if (needPositionRouterApproval) {
-      approvePositionRouter({
-        sentMsg: t`Enable leverage sent.`,
-        failMsg: t`Enable leverage failed.`,
-      });
-      return;
-    }
 
-    if (needApproval) {
-      approveFromToken();
-      return;
-    }
+    // if (isStopOrder) {
+    //   setOrderOption(MARKET);
+    //   return;
+    // }
 
-    if (needOrderBookApproval) {
-      setOrdersToaOpen(true);
-      return;
-    }
+    // if (!active) {
+    //   openConnectModal();
+    //   return;
+    // }
 
-    const [, errorType, errorCode] = getError();
+    // if (needPositionRouterApproval) {
+    //   approvePositionRouter({
+    //     sentMsg: t`Enable leverage sent.`,
+    //     failMsg: t`Enable leverage failed.`,
+    //   });
+    //   return;
+    // }
 
-    if (errorType === ErrorDisplayType.Modal) {
-      setModalError(errorCode);
-      return;
-    }
+    // if (needApproval) {
+    //   approveFromToken();
+    //   return;
+    // }
 
-    if (isSwap) {
-      if (fromTokenAddress === ZeroAddress && toTokenAddress === nativeTokenAddress) {
-        wrap();
-        return;
-      }
+    // if (needOrderBookApproval) {
+    //   setOrdersToaOpen(true);
+    //   return;
+    // }
 
-      if (fromTokenAddress === nativeTokenAddress && toTokenAddress === ZeroAddress) {
-        unwrap();
-        return;
-      }
-    }
+    // const [, errorType, errorCode] = getError();
 
-    setIsConfirming(true);
-    setIsHigherSlippageAllowed(false);
+    // if (errorType === ErrorDisplayType.Modal) {
+    //   setModalError(errorCode);
+    //   return;
+    // }
+
+    // if (isSwap) {
+    //   if (fromTokenAddress === ZeroAddress && toTokenAddress === nativeTokenAddress) {
+    //     wrap();
+    //     return;
+    //   }
+
+    //   if (fromTokenAddress === nativeTokenAddress && toTokenAddress === ZeroAddress) {
+    //     unwrap();
+    //     return;
+    //   }
+    // }
+
+    // setIsConfirming(true);
+    // setIsHigherSlippageAllowed(false);
   };
 
   const isStopOrder = orderOption === STOP;
@@ -1806,12 +1811,12 @@ export default function SwapBox(props) {
 
   const existingLiquidationPrice = existingPosition
     ? getLiquidationPrice({
-        isLong: existingPosition.isLong,
-        size: existingPosition.size,
-        collateral: existingPosition.collateral,
-        averagePrice: existingPosition.averagePrice,
-        fundingFee: existingPosition.fundingFee,
-      })
+      isLong: existingPosition.isLong,
+      size: existingPosition.size,
+      collateral: existingPosition.collateral,
+      averagePrice: existingPosition.averagePrice,
+      fundingFee: existingPosition.fundingFee,
+    })
     : undefined;
 
   const displayLiquidationPrice = liquidationPrice ? liquidationPrice : existingLiquidationPrice;
@@ -1957,7 +1962,9 @@ export default function SwapBox(props) {
         <Tooltip
           isHandlerDisabled
           handle={
-            <Button variant="primary-action" className="w-full" onClick={onClickPrimary} disabled={!isPrimaryEnabled()}>
+            <Button variant="primary-action" className="w-full" onClick={onClickPrimary}
+            // disabled={!isPrimaryEnabled()}
+            >
               {primaryTextMessage}
             </Button>
           }
@@ -1973,7 +1980,7 @@ export default function SwapBox(props) {
         variant="primary-action"
         className="w-full"
         onClick={onClickPrimary}
-        disabled={!isPrimaryEnabled()}
+      // disabled={!isPrimaryEnabled()}
       >
         {primaryTextMessage}
       </Button>
