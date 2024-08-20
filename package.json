@@ -103,15 +103,6 @@
     "typechain": "typechain --target ethers-v6 --out-dir ./src/typechain-types './src/abis/*.json'",
     "postinstall": "yarn typechain"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "no-console": "warn"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
