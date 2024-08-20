@@ -49,7 +49,7 @@ const { ZeroAddress } = ethers;
 
 function AarcProvider({ children }) {
 
-  let { address, isConnected, connector } = useAccount();
+  let { address } = useAccount();
 
   const chainId = ARBITRUM
   const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");

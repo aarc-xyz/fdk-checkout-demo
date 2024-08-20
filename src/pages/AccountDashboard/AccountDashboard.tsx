@@ -115,7 +115,8 @@ function usePageParams(initialChainId: number) {
     [accountFromParams]
   );
 
-  const version = parseInt(queryParams.v ?? "2");
+  // const version = parseInt(queryParams.v ?? "2");
+  const version = 1
 
   useEffect(() => {
     let patch = undefined as any;
