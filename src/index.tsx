@@ -131,7 +131,7 @@ function AarcProvider({ children }) {
     // },
 
     apiKeys: {
-      aarcSDK: "b776f4d7-5df5-4e8c-a128-058bbe3eaace"
+      aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
     },
     events: {
       onTransactionSuccess: (data: TransactionSuccessData) => {
