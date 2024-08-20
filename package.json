@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aarc-dev/deposit-widget": "0.4.35",
+    "@aarc-dev/deposit-widget": "0.4.38",
     "@aarc-dev/eth-connector": "0.0.7",
     "@apollo/client": "3.5.6",
     "@binance/w3w-utils": "1.1.4",
