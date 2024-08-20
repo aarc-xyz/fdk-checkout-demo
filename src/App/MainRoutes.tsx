@@ -88,7 +88,7 @@ export function MainRoutes({ openSettings }: { openSettings: () => void }) {
   return (
     <Switch>
       <Route exact path="/">
-        <Redirect to="/trade" />
+        <Redirect to="/v1" />
       </Route>
       <Route exact path="/price_impact_rebates_stats">
         <PriceImpactRebatesStatsPage />

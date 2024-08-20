@@ -197,6 +197,11 @@ export default function SwapBox(props) {
   }
 
 
+  // useEffect(() => {
+  //   client?.updateDestinationTokenWithAddress(fromTokenAddress, chainId.toString());
+  // }, [])
+
+
 
   const isLong = swapOption === LONG;
   const isShort = swapOption === SHORT;
@@ -366,11 +371,11 @@ export default function SwapBox(props) {
 
   const fromAmount = parseValue(fromValue, fromToken && fromToken.decimals);
   const toAmount = parseValue(toValue, toToken && toToken.decimals);
-  useEffect(() => {
+  // useEffect(() => {
 
-    setDepositAmount(fromValue)
+  //   setDepositAmount(fromValue)
 
-  }, [fromValue])
+  // }, [fromValue])
   const isPotentialWrap = (fromToken.isNative && toToken.isWrapped) || (fromToken.isWrapped && toToken.isNative);
   const isWrapOrUnwrap = isSwap && isPotentialWrap;
   const needApproval =
@@ -1228,6 +1233,7 @@ export default function SwapBox(props) {
 
   const onFromValueChange = (e) => {
     setAnchorOnFromAmount(true);
+    setDepositAmount(e.target.value)
     setFromValue(e.target.value);
   };
 
@@ -1676,7 +1682,7 @@ export default function SwapBox(props) {
     }
 
     console.log("toTokenAddress", fromTokenAddress);
-  //  await client.updateDestinationTokenWithAddress(fromTokenAddress, chainId);
+    //  await client.updateDestinationTokenWithAddress(fromTokenAddress, chainId);
 
     setOpenModal(true);
 

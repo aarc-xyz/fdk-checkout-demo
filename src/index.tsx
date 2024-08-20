@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 import "styles/tailwind.css";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -23,6 +23,12 @@ import {
 } from "@aarc-dev/deposit-widget"
 import useWallet from "lib/wallets/useWallet";
 import { useAccount } from "wagmi";
+import { useLocalStorageByChainId } from "lib/localStorage";
+import { ethers } from "ethers";
+import { zeroAddress } from "viem";
+import { getConstant } from "config/chains";
+import { getTokenBySymbol } from "config/tokens";
+import { SWAP, LONG, SHORT } from "lib/legacy";
 
 const queryClient = new QueryClient()
 
@@ -39,13 +45,39 @@ createRoot(document.getElementById("root")!).render(
   </React.StrictMode >
 );
 
+const { ZeroAddress } = ethers;
 
 function AarcProvider({ children }) {
 
   const { address, isConnected, connector, chainId } = useAccount();
+  const defaultCollateralSymbol = getConstant(chainId || 1, "defaultCollateralSymbol");
+  const defaultTokenSelection = useMemo(
+    () => ({
+      [SWAP]: {
+        from: ZeroAddress,
+        to: getTokenBySymbol(chainId || 1, defaultCollateralSymbol).address,
+      },
+      [LONG]: {
+        from: ZeroAddress,
+        to: ZeroAddress,
+      },
+      [SHORT]: {
+        from: getTokenBySymbol(chainId || 1, defaultCollateralSymbol).address,
+        to: ZeroAddress,
+      },
+    }),
+    [chainId, defaultCollateralSymbol]
+  );
+  const [tokenSelection, setTokenSelection] = useLocalStorageByChainId(
+    chainId || 1,
+    "Exchange-token-selection-v2",
+    defaultTokenSelection
+  );
+  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId || 1, "Swap-option-v2", "Long");
+  const fromTokenAddress = tokenSelection?.[swapOption as any].from;
 
   console.log(address, "address")
-
+  console.log(tokenSelection, "tokenSelection")
   const config: FKConfig = {
     appName: "Dapp Name",
     module: {
@@ -71,7 +103,8 @@ function AarcProvider({ children }) {
     destination: {
       chainId: chainId || 1,
       walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-      tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      // tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      tokenAddress: tokenSelection?.[LONG].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       requestedAmount: 10,
       // contract: {
       //     contractAddress: "0x94De497a5E88Da7bc522a8203100f99Dd6e6171e",
@@ -95,7 +128,7 @@ function AarcProvider({ children }) {
     // },
 
     apiKeys: {
-      aarcSDK: process.env.REACT_APP_AARC_API_KEY || ""
+      aarcSDK: "b776f4d7-5df5-4e8c-a128-058bbe3eaace"
     },
     events: {
       onTransactionSuccess: (data: TransactionSuccessData) => {
