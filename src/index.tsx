@@ -13,7 +13,7 @@ import { rainbowKitConfig } from "lib/wallets/rainbowKitConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { AarcEthWalletConnector } from "@aarc-dev/eth-connector"
 import "@aarc-dev/eth-connector/styles.css"
-// import "@aarc-dev/deposit-widget/styles.css"
+import "@aarc-dev/deposit-widget/styles.css"
 import {
   AarcSwitchWidgetProvider,
   FKConfig,
