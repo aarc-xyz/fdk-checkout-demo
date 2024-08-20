@@ -48,7 +48,6 @@ function AarcProvider({ children }) {
 
   const config: FKConfig = {
     appName: "Dapp Name",
-    environment: "stage",
     module: {
       exchange: {
         enabled: true,
