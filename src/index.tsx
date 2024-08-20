@@ -40,12 +40,12 @@ createRoot(document.getElementById("root")!).render(
 );
 
 
-function AarcProvider({ children }) {
+function AarcProvider({ children }) {   
 
   const { address, isConnected, connector, chainId } = useAccount();
 
   console.log(address, "address")
-
+    
   const config: FKConfig = {
     appName: "Dapp Name",
     module: {
