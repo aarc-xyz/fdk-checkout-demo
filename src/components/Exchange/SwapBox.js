@@ -1683,7 +1683,9 @@ export default function SwapBox(props) {
 
     console.log("toTokenAddress", fromTokenAddress);
     //  await client.updateDestinationTokenWithAddress(fromTokenAddress, chainId);
-
+    if (getPrimaryText() == "You already have sufficient balance") {
+      return;
+    }
     setOpenModal(true);
 
 
