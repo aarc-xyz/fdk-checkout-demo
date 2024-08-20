@@ -5,20 +5,11 @@ __metadata:
   version: 5
   cacheKey: 8
 
-"@aarc-dev/core-viem@npm:0.1.1":
-  version: 0.1.1
-  resolution: "@aarc-dev/core-viem@npm:0.1.1"
+"@aarc-dev/deposit-widget@npm:0.4.39":
+  version: 0.4.39
+  resolution: "@aarc-dev/deposit-widget@npm:0.4.39"
   dependencies:
-    viem: ^2.9.31
-  checksum: 657c9c09cbe01f19ed613aef987bfbfbda2218f553c42f863eb9cdd920bec709a624341c467f79b8446511bb0e4e7da47866cdfdcc3d0ce8af83542fce5e061a
-  languageName: node
-  linkType: hard
-
-"@aarc-dev/deposit-widget@npm:0.4.38":
-  version: 0.4.38
-  resolution: "@aarc-dev/deposit-widget@npm:0.4.38"
-  dependencies:
-    "@aarc-dev/core-viem": 0.1.1
+    "@aarc-xyz/core-viem": 0.0.2
     "@ant-design/icons": ^5.3.3
     "@meshconnect/web-link-sdk": 3.0.2
     antd: 5.20.1
@@ -37,7 +28,7 @@ __metadata:
     "@tanstack/react-query": ^5.28.4
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: e676dde02b5c1020754c8dca3fcc14d9d7017e6da53d9ae9c8ddaa75226c8162e748d187bb46cbabad95fa279c3e8f85b731fe93cc60071f505230fe880d3441
+  checksum: 4830b55ba35cc73d8aed1bde6ff21001a811721ccdb774694143129acc1955fd3fe8f6f5a44bbfab467bfc05e0c93fde7a1c4727ec79df17f380d6367dc4f6aa
   languageName: node
   linkType: hard
 
@@ -54,6 +45,15 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
   checksum: 76542f595a40ffb680545fdc1f130640ef329aa3d0dbe80125e0aab6e23f4c27d8b78ab6158c778df61e9be5c175141ab9a46d36c7d61f44dc7b4513629bd236
+  languageName: node
+  linkType: hard
+
+"@aarc-xyz/core-viem@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@aarc-xyz/core-viem@npm:0.0.2"
+  dependencies:
+    viem: ^2.9.31
+  checksum: 68b1c76419ee2e6adf4b321e81a51f2c95ebbf02fbaee2aa84c684817c3428c65e14d002814b992134ad24b7f8f7b546968c03d700a23ce3ae69e397b5dac692
   languageName: node
   linkType: hard
 
@@ -12173,7 +12173,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gambit-interface@workspace:."
   dependencies:
-    "@aarc-dev/deposit-widget": 0.4.38
+    "@aarc-dev/deposit-widget": 0.4.39
     "@aarc-dev/eth-connector": 0.0.7
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
