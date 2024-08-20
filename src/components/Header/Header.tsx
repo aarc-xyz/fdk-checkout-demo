@@ -19,6 +19,7 @@ import { HeaderPromoBanner } from "components/HeaderPromoBanner/HeaderPromoBanne
 import { useMedia } from "react-use";
 import { HeaderLink } from "./HeaderLink";
 
+
 // Fix framer-motion old React FC type (solved in react 18)
 const AnimatePresence = (props: React.ComponentProps<typeof FramerAnimatePresence> & { children: ReactNode }) => (
   <FramerAnimatePresence {...props} />
@@ -42,9 +43,11 @@ type Props = {
   showRedirectModal: (to: string) => void;
 };
 
+
+
 export function Header({ disconnectAccountAndCloseSettings, openSettings, showRedirectModal }: Props) {
   const isMobile = useMedia("(max-width: 1200px)");
-
+  // const { active, account } = useWallet();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isNativeSelectorModalVisible, setIsNativeSelectorModalVisible] = useState(false);
   const isTradingIncentivesActive = false;
@@ -61,7 +64,11 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
     };
   }, [isDrawerVisible]);
 
+
+
+
   return (
+
     <>
       {isDrawerVisible && (
         <AnimatePresence>
@@ -189,5 +196,6 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
         )}
       </AnimatePresence>
     </>
+
   );
 }

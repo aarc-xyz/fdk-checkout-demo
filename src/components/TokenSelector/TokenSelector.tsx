@@ -15,7 +15,8 @@ import { convertToUsd } from "domain/synthetics/tokens";
 import SearchInput from "components/SearchInput/SearchInput";
 import TokenIcon from "components/TokenIcon/TokenIcon";
 import { bigMath } from "lib/bigmath";
-
+import { ThemeName, useModal, useTheme } from "@aarc-dev/deposit-widget";
+import { useAccount } from "wagmi"
 type TokenState = {
   disabled?: boolean;
   message?: string;
@@ -46,6 +47,8 @@ export default function TokenSelector(props: Props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   let tokenInfo: TokenInfo | undefined;
+  const { openModal, setOpenModal, client } = useModal()
+
 
   try {
     tokenInfo = getToken(props.chainId, props.tokenAddress);
@@ -68,10 +71,15 @@ export default function TokenSelector(props: Props) {
     extendedSortSequence,
     qa,
   } = props;
+  const { chainId } = useAccount();
+
 
   const visibleTokens = tokens.filter((t) => t && !t.isTempHidden);
 
-  const onSelectToken = (token) => {
+  const onSelectToken = async (token) => {
+
+    if (chainId)
+      await client?.updateDestinationTokenWithAddress(token.address, chainId.toString());
     setIsModalVisible(false);
     props.onSelectToken(token);
   };

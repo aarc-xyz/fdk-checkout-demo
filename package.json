@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aarc-dev/deposit-widget": "0.4.44",
+    "@aarc-dev/eth-connector": "0.0.7",
     "@apollo/client": "3.5.6",
     "@binance/w3w-utils": "1.1.4",
     "@davatar/react": "1.8.1",
@@ -100,15 +102,6 @@
     "prettier": "prettier --write src/**/*.{js,ts,jsx,tsx,css,scss}",
     "typechain": "typechain --target ethers-v6 --out-dir ./src/typechain-types './src/abis/*.json'",
     "postinstall": "yarn typechain"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "no-console": "warn"
-    }
   },
   "browserslist": {
     "production": [

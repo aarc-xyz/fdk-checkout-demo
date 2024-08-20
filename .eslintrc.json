@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended",  "plugin:react-hooks/recommended", "plugin:react/recommended", "plugin:react-perf/recommended"],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended",  "plugin:react-hooks/recommended", "plugin:react-perf/recommended"],
     "plugins": ["eslint-plugin-local-rules"],
     "rules": {
       "no-undef": "error",
