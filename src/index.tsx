@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 import "styles/tailwind.css";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -13,6 +13,7 @@ import { rainbowKitConfig } from "lib/wallets/rainbowKitConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { AarcEthWalletConnector } from "@aarc-dev/eth-connector"
 import "@aarc-dev/eth-connector/styles.css"
+import "@aarc-dev/deposit-widget/styles.css"
 import {
   AarcSwitchWidgetProvider,
   FKConfig,
@@ -22,6 +23,12 @@ import {
 } from "@aarc-dev/deposit-widget"
 import useWallet from "lib/wallets/useWallet";
 import { useAccount } from "wagmi";
+import { useLocalStorageByChainId } from "lib/localStorage";
+import { ethers } from "ethers";
+import { zeroAddress } from "viem";
+import { getConstant } from "config/chains";
+import { getTokenBySymbol } from "config/tokens";
+import { SWAP, LONG, SHORT } from "lib/legacy";
 
 const queryClient = new QueryClient()
 
@@ -38,16 +45,44 @@ createRoot(document.getElementById("root")!).render(
   </React.StrictMode >
 );
 
+const { ZeroAddress } = ethers;
 
 function AarcProvider({ children }) {
 
-  const { address, isConnected, connector, chainId } = useAccount();
+  let { address, isConnected, connector, chainId } = useAccount();
+  if (!chainId) {
+    chainId = 42161
+  }
+  const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
+  const defaultTokenSelection = useMemo(
+    () => ({
+      [SWAP]: {
+        from: ZeroAddress,
+        to: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
+      },
+      [LONG]: {
+        from: ZeroAddress,
+        to: ZeroAddress,
+      },
+      [SHORT]: {
+        from: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
+        to: ZeroAddress,
+      },
+    }),
+    [chainId, defaultCollateralSymbol]
+  );
+  const [tokenSelection, setTokenSelection] = useLocalStorageByChainId(
+    chainId || 1,
+    "Exchange-token-selection-v2",
+    defaultTokenSelection
+  );
+  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", "Long");
+  const fromTokenAddress = tokenSelection?.[swapOption as any].from;
 
   console.log(address, "address")
-
+  console.log(tokenSelection, "tokenSelection")
   const config: FKConfig = {
     appName: "Dapp Name",
-    environment: "stage",
     module: {
       exchange: {
         enabled: true,
@@ -69,9 +104,11 @@ function AarcProvider({ children }) {
       },
     },
     destination: {
-      chainId: chainId || 1,
+      chainId: chainId,
       walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-      tokenAddress: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+      // tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      tokenAddress: tokenSelection?.[LONG].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      requestedAmount: 10,
       // contract: {
       //     contractAddress: "0x94De497a5E88Da7bc522a8203100f99Dd6e6171e",
       //     contractName: "Aave",
@@ -94,9 +131,7 @@ function AarcProvider({ children }) {
     // },
 
     apiKeys: {
-      aarcSDK:
-        "294ffbcf-6a16-4e8a-8b5c-9aca09188f36", // Staging
-      // 'b776f4d7-5df5-4e8c-a128-058bbe3eaace', // Prod
+      aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
     },
     events: {
       onTransactionSuccess: (data: TransactionSuccessData) => {

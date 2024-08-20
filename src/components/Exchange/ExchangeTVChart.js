@@ -203,9 +203,8 @@ export default function ExchangeTVChart(props) {
           if (indexToken && indexToken.symbol) {
             tokenSymbol = indexToken.isWrapped ? indexToken.baseSymbol : indexToken.symbol;
           }
-          const title = `${order.type === INCREASE ? "Inc." : "Dec."} ${tokenSymbol} ${
-            order.isLong ? "Long" : "Short"
-          }`;
+          const title = `${order.type === INCREASE ? "Inc." : "Dec."} ${tokenSymbol} ${order.isLong ? "Long" : "Short"
+            }`;
           const color = "#3a3e5e";
           lines.push(
             currentSeries.createPriceLine({
@@ -364,7 +363,7 @@ export default function ExchangeTVChart(props) {
           </div>
         </div>
         <div className="ExchangeChart-info VersionSwitch-wrapper">
-          <VersionSwitch />
+          {/* <VersionSwitch /> */}
         </div>
       </div>
       <div className="ExchangeChart-bottom App-box App-box-border">

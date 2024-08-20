@@ -58,6 +58,7 @@ import { getLeverage, getLeverageStr } from "lib/positions/getLeverage";
 import { usePendingTxns } from "lib/usePendingTxns";
 import useWallet from "lib/wallets/useWallet";
 import "./Exchange.css";
+import { ThemeName, useTheme } from "@aarc-dev/deposit-widget";
 const { ZeroAddress } = ethers;
 
 const PENDING_POSITION_VALID_DURATION = 600 * 1000;
@@ -411,6 +412,14 @@ export const Exchange = forwardRef(
     const [pendingPositions, setPendingPositions] = useState({});
     const [updatedPositions, setUpdatedPositions] = useState({});
     const [pendingTxns, setPendingTxns] = usePendingTxns();
+
+    const { setTheme } = useTheme()
+
+    useEffect(() => {
+      console.log("setting theme")
+      setTheme(ThemeName.DARK)
+    }
+      , [])
 
     const hideBanner = () => {
       const hiddenLimit = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
