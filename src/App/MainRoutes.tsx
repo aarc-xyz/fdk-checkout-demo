@@ -129,13 +129,14 @@ export function MainRoutes({ openSettings }: { openSettings: () => void }) {
       </Route>
 
       <Route exact path="/trade/:tradeType?">
-        {getIsSyntheticsSupported(chainId) ? (
+        {/* {getIsSyntheticsSupported(chainId) ? (
           <SyntheticsStateContextProvider skipLocalReferralCode={false} pageType="trade">
             <SyntheticsPage openSettings={openSettings} />
           </SyntheticsStateContextProvider>
         ) : (
           <SyntheticsFallbackPage />
-        )}
+        )} */}
+        <Exchange ref={exchangeRef} openSettings={openSettings} />
       </Route>
       <Redirect from="/v2" to="/v1" />
       <Route exact path="/buy_glp">

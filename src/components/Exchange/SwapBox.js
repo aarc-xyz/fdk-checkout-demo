@@ -876,9 +876,9 @@ export default function SwapBox(props) {
       return [`Enter a price`];
     }
 
-    if (!hasExistingPosition && fromUsdMin !== undefined && fromUsdMin < expandDecimals(10, USD_DECIMALS)) {
-      return [`Min order: 10 USD`];
-    }
+    // if (!hasExistingPosition && fromUsdMin !== undefined && fromUsdMin < expandDecimals(10, USD_DECIMALS)) {
+    //   return [`Min order: 10 USD`];
+    // }
 
     if (leverage !== undefined && leverage < 1.1 * BASIS_POINTS_DIVISOR) {
       return [`Min leverage: 1.1x`];
@@ -1137,7 +1137,7 @@ export default function SwapBox(props) {
     }
     if (needPositionRouterApproval) {
       console.log('State: needPositionRouterApproval');
-      return `Enable Leverage`;
+      return `You already have sufficient balance`;
     }
 
     if (needApproval && isWaitingForApproval) {

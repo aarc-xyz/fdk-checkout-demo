@@ -137,7 +137,7 @@ export function SyntheticsPage(p: Props) {
 
     const title = getPageTitle(
       currentTokenPriceStr +
-        ` | ${chartToken?.symbol}${chartToken?.symbol ? " " : ""}${chartToken?.isStable ? "" : "USD"}`
+      ` | ${chartToken?.symbol}${chartToken?.symbol ? " " : ""}${chartToken?.isStable ? "" : "USD"}`
     );
     document.title = title;
   }, [chartToken, chartToken?.address, chartToken?.isStable, chartToken?.symbol]);

@@ -106,11 +106,11 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
 
   return (
     <div className="App-header-user">
-      <div data-qa="trade" className={cx("App-header-trade-link")}>
+      {/* <div data-qa="trade" className={cx("App-header-trade-link")}>
         <Button className="default-btn" variant="primary" onClick={() => { setOpenModal(true) }}>
           {isHomeSite() ? <Trans>Launch App</Trans> : <Trans>Trade</Trans>}
         </Button>
-      </div>
+      </div> */}
 
       {showConnectionOptions ? (
         <>
