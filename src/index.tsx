@@ -49,20 +49,23 @@ const { ZeroAddress } = ethers;
 
 function AarcProvider({ children }) {
 
-  const { address, isConnected, connector, chainId } = useAccount();
-  const defaultCollateralSymbol = getConstant(chainId || 1, "defaultCollateralSymbol");
+  let { address, isConnected, connector, chainId } = useAccount();
+  if (!chainId) {
+    chainId = 42161
+  }
+  const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
   const defaultTokenSelection = useMemo(
     () => ({
       [SWAP]: {
         from: ZeroAddress,
-        to: getTokenBySymbol(chainId || 1, defaultCollateralSymbol).address,
+        to: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
       },
       [LONG]: {
         from: ZeroAddress,
         to: ZeroAddress,
       },
       [SHORT]: {
-        from: getTokenBySymbol(chainId || 1, defaultCollateralSymbol).address,
+        from: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
         to: ZeroAddress,
       },
     }),
@@ -73,7 +76,7 @@ function AarcProvider({ children }) {
     "Exchange-token-selection-v2",
     defaultTokenSelection
   );
-  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId || 1, "Swap-option-v2", "Long");
+  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", "Long");
   const fromTokenAddress = tokenSelection?.[swapOption as any].from;
 
   console.log(address, "address")
@@ -101,7 +104,7 @@ function AarcProvider({ children }) {
       },
     },
     destination: {
-      chainId: chainId || 1,
+      chainId: chainId,
       walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
       // tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       tokenAddress: tokenSelection?.[LONG].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
