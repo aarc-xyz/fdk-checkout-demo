@@ -14,9 +14,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aarc-dev/deposit-widget@npm:0.4.35":
-  version: 0.4.35
-  resolution: "@aarc-dev/deposit-widget@npm:0.4.35"
+"@aarc-dev/deposit-widget@npm:0.4.38":
+  version: 0.4.38
+  resolution: "@aarc-dev/deposit-widget@npm:0.4.38"
   dependencies:
     "@aarc-dev/core-viem": 0.1.1
     "@ant-design/icons": ^5.3.3
@@ -37,7 +37,7 @@ __metadata:
     "@tanstack/react-query": ^5.28.4
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: c9e41f75063502ccc5c0daad96f16362c108c06069945e78897afc0654e6f36a147851a06835756722ea10b2fee11df6f38f40779bb1246e3d9a16743ac8b957
+  checksum: e676dde02b5c1020754c8dca3fcc14d9d7017e6da53d9ae9c8ddaa75226c8162e748d187bb46cbabad95fa279c3e8f85b731fe93cc60071f505230fe880d3441
   languageName: node
   linkType: hard
 
@@ -12173,7 +12173,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gambit-interface@workspace:."
   dependencies:
-    "@aarc-dev/deposit-widget": 0.4.35
+    "@aarc-dev/deposit-widget": 0.4.38
     "@aarc-dev/eth-connector": 0.0.7
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
