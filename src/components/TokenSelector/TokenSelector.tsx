@@ -15,8 +15,9 @@ import { convertToUsd } from "domain/synthetics/tokens";
 import SearchInput from "components/SearchInput/SearchInput";
 import TokenIcon from "components/TokenIcon/TokenIcon";
 import { bigMath } from "lib/bigmath";
-import { ThemeName, useModal, useTheme } from "@aarc-dev/deposit-widget";
+import { useModal } from "@aarc-dev/deposit-widget";
 import { useAccount } from "wagmi"
+import Loader from "components/Common/Loader";
 type TokenState = {
   disabled?: boolean;
   message?: string;
@@ -47,8 +48,8 @@ export default function TokenSelector(props: Props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   let tokenInfo: TokenInfo | undefined;
-  const { openModal, setOpenModal, client } = useModal()
-
+  const { client } = useModal()
+  const [loading, setLoading] = useState(false)
 
   try {
     tokenInfo = getToken(props.chainId, props.tokenAddress);
@@ -77,9 +78,11 @@ export default function TokenSelector(props: Props) {
   const visibleTokens = tokens.filter((t) => t && !t.isTempHidden);
 
   const onSelectToken = async (token) => {
-
+    setLoading(true)
     if (chainId)
       await client?.updateDestinationTokenWithAddress(token.address, chainId.toString());
+    setLoading(false)
+
     setIsModalVisible(false);
     props.onSelectToken(token);
   };
@@ -190,7 +193,7 @@ export default function TokenSelector(props: Props) {
           />
         }
       >
-        <div className="TokenSelector-tokens">
+        {loading ? <Loader /> : <div className="TokenSelector-tokens">
           {sortedFilteredTokens.map((token, tokenIndex) => {
             let info = infoTokens?.[token.address] || ({} as TokenInfo);
 
@@ -255,7 +258,8 @@ export default function TokenSelector(props: Props) {
               </div>
             );
           })}
-        </div>
+        </div>}
+
       </Modal>
       {selectedTokenLabel ? (
         <div data-qa={qa} className="TokenSelector-box" onClick={() => setIsModalVisible(true)}>

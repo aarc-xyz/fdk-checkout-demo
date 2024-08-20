@@ -26,7 +26,7 @@ import { useAccount } from "wagmi";
 import { useLocalStorageByChainId } from "lib/localStorage";
 import { ethers } from "ethers";
 import { zeroAddress } from "viem";
-import { getConstant } from "config/chains";
+import { ARBITRUM, getConstant } from "config/chains";
 import { getTokenBySymbol } from "config/tokens";
 import { SWAP, LONG, SHORT } from "lib/legacy";
 
@@ -49,10 +49,9 @@ const { ZeroAddress } = ethers;
 
 function AarcProvider({ children }) {
 
-  let { address, isConnected, connector, chainId } = useAccount();
-  if (!chainId) {
-    chainId = 42161
-  }
+  let { address, isConnected, connector } = useAccount();
+
+  const chainId = ARBITRUM
   const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
   const defaultTokenSelection = useMemo(
     () => ({
@@ -76,8 +75,6 @@ function AarcProvider({ children }) {
     "Exchange-token-selection-v2",
     defaultTokenSelection
   );
-  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", "Long");
-  const fromTokenAddress = tokenSelection?.[swapOption as any].from;
 
   console.log(address, "address")
   console.log(tokenSelection, "tokenSelection")
@@ -106,29 +103,11 @@ function AarcProvider({ children }) {
     destination: {
       chainId: chainId,
       walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-      // tokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       tokenAddress: tokenSelection?.[LONG].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       requestedAmount: 10,
-      // contract: {
-      //     contractAddress: "0x94De497a5E88Da7bc522a8203100f99Dd6e6171e",
-      //     contractName: "Aave",
-      //     contractPayload: "",
-      //     contractGasLimit: "2000000",
-      // },
+
     },
-    // appearance: {
-    //   themeColor: "#2D2D2D",
-    //   textColor: "#2D2D2D",
-    //   backgroundColor: "#FFF",
-    //   highlightColor: "#F0F0F0",
-    //   dark: {
-    //     themeColor: "#FFF", // #2D2D2D
-    //     textColor: "#FFF", // #FFF
-    //     backgroundColor: "#2D2D2D", // #2D2D2D
-    //     highlightColor: "#2D2D2D", // #FFF
-    //   },
-    //   // roundness: 42,
-    // },
+
 
     apiKeys: {
       aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",

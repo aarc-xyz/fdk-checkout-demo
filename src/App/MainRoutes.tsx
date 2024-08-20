@@ -137,7 +137,7 @@ export function MainRoutes({ openSettings }: { openSettings: () => void }) {
           <SyntheticsFallbackPage />
         )}
       </Route>
-      <Redirect from="/v2" to="/trade" />
+      <Redirect from="/v2" to="/v1" />
       <Route exact path="/buy_glp">
         <BuyGlp />
       </Route>

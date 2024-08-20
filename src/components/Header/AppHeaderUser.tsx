@@ -64,7 +64,7 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
   const { openConnectModal } = useConnectModal();
   const showConnectionOptions = !isHomeSite();
   const [tradePageVersion] = useTradePageVersion();
-  const { openModal, setOpenModal, client } = useModal()
+  const { setOpenModal } = useModal()
   const tradeLink = tradePageVersion === 2 ? "/trade" : "/v1";
 
   const selectorLabel = getChainName(chainId);
