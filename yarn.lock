@@ -30,9 +30,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aarc-xyz/fund-kit-widget@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@aarc-xyz/fund-kit-widget@npm:0.0.2"
+"@aarc-xyz/fund-kit-widget@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@aarc-xyz/fund-kit-widget@npm:0.0.3"
   dependencies:
     "@aarc-xyz/core-viem": 0.0.2
     "@ant-design/icons": ^5.3.3
@@ -53,7 +53,7 @@ __metadata:
     "@tanstack/react-query": ^5.28.4
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: a845d1f597697bdc83b49729bb8ea589fdce8ee653f454644ad1e419d92ed4898939c772abb8851d77bdcafbebd69e9d93e30a938d2ad779bf0897428cf706f1
+  checksum: 36523364043fc1deca192a31d346db83af9cc1e1d0b63ea6259bc3d13b3d37a98a9bca55e530008d1f2066534c30e2638824faa2ab3f6aaca0f71bb035316022
   languageName: node
   linkType: hard
 
@@ -12153,7 +12153,7 @@ __metadata:
   resolution: "gambit-interface@workspace:."
   dependencies:
     "@aarc-xyz/eth-connector": 0.0.2
-    "@aarc-xyz/fund-kit-widget": 0.0.2
+    "@aarc-xyz/fund-kit-widget": 0.0.3
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
     "@binance/w3w-utils": 1.1.4
