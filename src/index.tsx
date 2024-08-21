@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 import "styles/tailwind.css";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -51,6 +51,7 @@ function AarcProvider({ children }) {
 
   const chainId = ARBITRUM
   const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
+  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", LONG);
   const defaultTokenSelection = useMemo(
     () => ({
       [SWAP]: {
@@ -76,6 +77,12 @@ function AarcProvider({ children }) {
 
   console.log(address, "address")
   console.log(tokenSelection, "tokenSelection")
+
+  useEffect(() => {
+    console.log(swapOption, "swapOption")
+    console.log(tokenSelection, "tokenSelection")
+  }, [swapOption])
+
   const config: FKConfig = {
     appName: "Dapp Name",
     module: {
@@ -98,7 +105,7 @@ function AarcProvider({ children }) {
     destination: {
       chainId: chainId,
       walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-      tokenAddress: tokenSelection?.[LONG].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      tokenAddress: tokenSelection?.[swapOption as any].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       requestedAmount: 10,
 
     },
