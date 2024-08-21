@@ -90,7 +90,7 @@ import { MAX_METAMASK_MOBILE_DECIMALS } from "config/ui";
 import { useHistory } from "react-router-dom";
 import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
-import { useModal } from "@aarc-dev/deposit-widget";
+import { useModal } from "@aarc-xyz/fund-kit-widget";
 
 const SWAP_ICONS = {
   [LONG]: <LongIcon />,

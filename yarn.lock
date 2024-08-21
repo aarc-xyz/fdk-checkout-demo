@@ -5,9 +5,34 @@ __metadata:
   version: 5
   cacheKey: 8
 
-"@aarc-dev/deposit-widget@npm:0.4.44":
-  version: 0.4.44
-  resolution: "@aarc-dev/deposit-widget@npm:0.4.44"
+"@aarc-xyz/core-viem@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@aarc-xyz/core-viem@npm:0.0.2"
+  dependencies:
+    viem: ^2.9.31
+  checksum: 68b1c76419ee2e6adf4b321e81a51f2c95ebbf02fbaee2aa84c684817c3428c65e14d002814b992134ad24b7f8f7b546968c03d700a23ce3ae69e397b5dac692
+  languageName: node
+  linkType: hard
+
+"@aarc-xyz/eth-connector@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@aarc-xyz/eth-connector@npm:0.0.2"
+  dependencies:
+    "@rainbow-me/rainbowkit": 2.0.2
+    viem: 2.8.12
+    wagmi: 2.5.7
+  peerDependencies:
+    "@aarc-xyz/fund-kit-widget": 0.0.2
+    "@tanstack/react-query": ^5.28.4
+    react: 18.3.1
+    react-dom: 18.3.1
+  checksum: ccc8a8e8092654cf525a347cd57d93d04d6e62223ce9da30ab31a3dff8b8f6ce185f95ce3a4fcef2564cb71f644e77d0d67b89b92b618a4c47571bdacf85410e
+  languageName: node
+  linkType: hard
+
+"@aarc-xyz/fund-kit-widget@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@aarc-xyz/fund-kit-widget@npm:0.0.2"
   dependencies:
     "@aarc-xyz/core-viem": 0.0.2
     "@ant-design/icons": ^5.3.3
@@ -28,32 +53,7 @@ __metadata:
     "@tanstack/react-query": ^5.28.4
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: af429d7ab12cee46a5efa252946e23cabc569cb32c346a494199ba2978c695df8ee96c2592d5cc493068b65f42cb861329b96f328501df4bc6da3d229698d296
-  languageName: node
-  linkType: hard
-
-"@aarc-dev/eth-connector@npm:0.0.7":
-  version: 0.0.7
-  resolution: "@aarc-dev/eth-connector@npm:0.0.7"
-  dependencies:
-    "@rainbow-me/rainbowkit": ^2.0.2
-    viem: 2.8.12
-    wagmi: ^2.5.7
-  peerDependencies:
-    "@aarc-dev/deposit-widget": "workspace:*"
-    "@tanstack/react-query": ^5.28.4
-    react: 18.3.1
-    react-dom: 18.3.1
-  checksum: 76542f595a40ffb680545fdc1f130640ef329aa3d0dbe80125e0aab6e23f4c27d8b78ab6158c778df61e9be5c175141ab9a46d36c7d61f44dc7b4513629bd236
-  languageName: node
-  linkType: hard
-
-"@aarc-xyz/core-viem@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@aarc-xyz/core-viem@npm:0.0.2"
-  dependencies:
-    viem: ^2.9.31
-  checksum: 68b1c76419ee2e6adf4b321e81a51f2c95ebbf02fbaee2aa84c684817c3428c65e14d002814b992134ad24b7f8f7b546968c03d700a23ce3ae69e397b5dac692
+  checksum: a845d1f597697bdc83b49729bb8ea589fdce8ee653f454644ad1e419d92ed4898939c772abb8851d77bdcafbebd69e9d93e30a938d2ad779bf0897428cf706f1
   languageName: node
   linkType: hard
 
@@ -4361,27 +4361,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rainbow-me/rainbowkit@npm:^2.0.2":
-  version: 2.1.4
-  resolution: "@rainbow-me/rainbowkit@npm:2.1.4"
-  dependencies:
-    "@vanilla-extract/css": 1.14.0
-    "@vanilla-extract/dynamic": 2.1.0
-    "@vanilla-extract/sprinkles": 1.6.1
-    clsx: 2.1.0
-    qrcode: 1.5.3
-    react-remove-scroll: 2.5.7
-    ua-parser-js: ^1.0.37
-  peerDependencies:
-    "@tanstack/react-query": ">=5.0.0"
-    react: ">=18"
-    react-dom: ">=18"
-    viem: 2.x
-    wagmi: ^2.9.0
-  checksum: 91e12be6d13b8bce148faa825362e012c5c5910acd2558acdf238eeff33cb6e090e0758492a667b41b945865b97952c9f099b6e84984a2b24039a184b7b5cfb7
-  languageName: node
-  linkType: hard
-
 "@rc-component/async-validator@npm:^5.0.3":
   version: 5.0.4
   resolution: "@rc-component/async-validator@npm:5.0.4"
@@ -6293,7 +6272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wagmi/connectors@npm:5.1.5, @wagmi/connectors@npm:^5.0.14":
+"@wagmi/connectors@npm:^5.0.14":
   version: 5.1.5
   resolution: "@wagmi/connectors@npm:5.1.5"
   dependencies:
@@ -6315,26 +6294,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wagmi/core@npm:2.13.4, @wagmi/core@npm:^2.11.2":
-  version: 2.13.4
-  resolution: "@wagmi/core@npm:2.13.4"
-  dependencies:
-    eventemitter3: 5.0.1
-    mipd: 0.0.7
-    zustand: 4.4.1
-  peerDependencies:
-    "@tanstack/query-core": ">=5.0.0"
-    typescript: ">=5.0.4"
-    viem: 2.x
-  peerDependenciesMeta:
-    "@tanstack/query-core":
-      optional: true
-    typescript:
-      optional: true
-  checksum: aa53de9dba8fa6d6b846a6584cb05fc03f2fb7ae023f8666ab030d5583966fc4b5aa81ca29b5ff8b6c04d26f1e6508126b62afad0ca2fa7fc5136e3a04e5cb33
-  languageName: node
-  linkType: hard
-
 "@wagmi/core@npm:2.6.5":
   version: 2.6.5
   resolution: "@wagmi/core@npm:2.6.5"
@@ -6352,6 +6311,26 @@ __metadata:
     typescript:
       optional: true
   checksum: c7f7ef8dcf4bba368416fbfd621a8b0effa9c017e804cee436187320c199cc2f0955f891b997102908c0902c0773fdbd367c79db614f17aee7b0e3e58ded855a
+  languageName: node
+  linkType: hard
+
+"@wagmi/core@npm:^2.11.2":
+  version: 2.13.4
+  resolution: "@wagmi/core@npm:2.13.4"
+  dependencies:
+    eventemitter3: 5.0.1
+    mipd: 0.0.7
+    zustand: 4.4.1
+  peerDependencies:
+    "@tanstack/query-core": ">=5.0.0"
+    typescript: ">=5.0.4"
+    viem: 2.x
+  peerDependenciesMeta:
+    "@tanstack/query-core":
+      optional: true
+    typescript:
+      optional: true
+  checksum: aa53de9dba8fa6d6b846a6584cb05fc03f2fb7ae023f8666ab030d5583966fc4b5aa81ca29b5ff8b6c04d26f1e6508126b62afad0ca2fa7fc5136e3a04e5cb33
   languageName: node
   linkType: hard
 
@@ -12173,8 +12152,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gambit-interface@workspace:."
   dependencies:
-    "@aarc-dev/deposit-widget": 0.4.44
-    "@aarc-dev/eth-connector": 0.0.7
+    "@aarc-xyz/eth-connector": 0.0.2
+    "@aarc-xyz/fund-kit-widget": 0.0.2
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
     "@binance/w3w-utils": 1.1.4
@@ -12257,6 +12236,7 @@ __metadata:
     sass: 1.55.0
     shallowequal: 1.1.0
     swr: 2.2.1
+    tailwind-merge: 2.5.2
     tailwindcss: 3.4.4
     typechain: 8.3.2
     typescript: 5.4.2
@@ -21182,6 +21162,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tailwind-merge@npm:2.5.2":
+  version: 2.5.2
+  resolution: "tailwind-merge@npm:2.5.2"
+  checksum: af745fc16245ac14eb5d3f0b9d076c024321877ad45f43b324465f6aa7f8b5de3816640594fbf6ac8b3500f70ff2687345787888744196ff6f82dfe9a1f99b97
+  languageName: node
+  linkType: hard
+
 "tailwindcss@npm:3.4.4":
   version: 3.4.4
   resolution: "tailwindcss@npm:3.4.4"
@@ -22487,25 +22474,6 @@ __metadata:
     typescript:
       optional: true
   checksum: bdb228573ef3119c8a935d127a98879671e8d7bb37e342097c8a5a91dc8304d1304fe695ce6a31f7ec989c794f3aa9e5e2f74fa23b34a69a2589a0b19b376c74
-  languageName: node
-  linkType: hard
-
-"wagmi@npm:^2.5.7":
-  version: 2.12.5
-  resolution: "wagmi@npm:2.12.5"
-  dependencies:
-    "@wagmi/connectors": 5.1.5
-    "@wagmi/core": 2.13.4
-    use-sync-external-store: 1.2.0
-  peerDependencies:
-    "@tanstack/react-query": ">=5.0.0"
-    react: ">=18"
-    typescript: ">=5.0.4"
-    viem: 2.x
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 847c70da0c52db73ad623d4917b7627e7a6aae0faceb0c5be23f1069b47427bb0c990ded06d63eb696aa5c338569d77dbed35e495bfc026362bfdbe8cf34efa9
   languageName: node
   linkType: hard
 

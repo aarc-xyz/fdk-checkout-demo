@@ -58,7 +58,7 @@ import { getLeverage, getLeverageStr } from "lib/positions/getLeverage";
 import { usePendingTxns } from "lib/usePendingTxns";
 import useWallet from "lib/wallets/useWallet";
 import "./Exchange.css";
-import { ThemeName, useTheme } from "@aarc-dev/deposit-widget";
+import { ThemeName, useTheme } from "@aarc-xyz/fund-kit-widget";
 const { ZeroAddress } = ethers;
 
 const PENDING_POSITION_VALID_DURATION = 600 * 1000;

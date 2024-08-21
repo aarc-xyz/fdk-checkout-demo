@@ -8,24 +8,22 @@ import { BrowserRouter as Router } from "react-router-dom";
 import WalletProvider from "lib/wallets/WalletProvider";
 import App from "./App/App";
 import reportWebVitals from "./reportWebVitals";
-import { rainbowKitConfig } from "lib/wallets/rainbowKitConfig";
-// import '../node_modules/@aarc-dev/deposit-widget/dist/style.css';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { AarcEthWalletConnector } from "@aarc-dev/eth-connector"
-import "@aarc-dev/eth-connector/styles.css"
-import "@aarc-dev/deposit-widget/styles.css"
+import { AarcEthWalletConnector } from "@aarc-xyz/eth-connector"
+import "@aarc-xyz/eth-connector/styles.css"
+import "@aarc-xyz/fund-kit-widget/styles.css"
 import {
   AarcSwitchWidgetProvider,
   FKConfig,
   TransactionErrorData,
   TransactionSuccessData,
-  OpenModal
-} from "@aarc-dev/deposit-widget"
-import useWallet from "lib/wallets/useWallet";
+  ThemeName
+} from "@aarc-xyz/fund-kit-widget"
+
 import { useAccount } from "wagmi";
 import { useLocalStorageByChainId } from "lib/localStorage";
 import { ethers } from "ethers";
-import { zeroAddress } from "viem";
+
 import { ARBITRUM, getConstant } from "config/chains";
 import { getTokenBySymbol } from "config/tokens";
 import { SWAP, LONG, SHORT } from "lib/legacy";
@@ -87,11 +85,8 @@ function AarcProvider({ children }) {
       onRamp: {
         enabled: true,
         onRampConfig: {
-          mode: "deposit",
           customerId: "323232323",
           exchangeScreenTitle: "Deposit funds in your wallet",
-          networks: ["ethereum", "polygon"],
-          defaultNetwork: "polygon",
         },
       },
       bridgeAndSwap: {
@@ -106,6 +101,21 @@ function AarcProvider({ children }) {
       tokenAddress: tokenSelection?.[LONG].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       requestedAmount: 10,
 
+    },
+    appearance: {
+      // themeColor: "#2D2D2D",
+      // textColor: "#2D2D2D",
+      // backgroundColor: "#FFF",
+      // highlightColor: "#F0F0F0",
+      dark: {
+        themeColor: "#2C42FC", // #2D2D2D
+        textColor: "#FFF", // #FFF
+        backgroundColor: "#16182E", // #2D2D2D
+        highlightColor: "#08091B", // #FFF
+        borderColor: "#24263B",
+      },
+      theme: ThemeName.DARK,
+      // roundness: 42,
     },
 
 

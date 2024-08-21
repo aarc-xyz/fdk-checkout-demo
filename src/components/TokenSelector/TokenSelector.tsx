@@ -15,7 +15,7 @@ import { convertToUsd } from "domain/synthetics/tokens";
 import SearchInput from "components/SearchInput/SearchInput";
 import TokenIcon from "components/TokenIcon/TokenIcon";
 import { bigMath } from "lib/bigmath";
-import { useModal } from "@aarc-dev/deposit-widget";
+import { useModal } from "@aarc-xyz/fund-kit-widget";
 import { useAccount } from "wagmi"
 import Loader from "components/Common/Loader";
 type TokenState = {

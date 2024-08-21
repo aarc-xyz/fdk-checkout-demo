@@ -17,7 +17,7 @@ import { HeaderLink } from "./HeaderLink";
 import useWallet from "lib/wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useTradePageVersion } from "lib/useTradePageVersion";
-import { useModal } from "@aarc-dev/deposit-widget";
+import { useModal } from "@aarc-xyz/fund-kit-widget";
 import Button from "components/Button/Button";
 import { useEffect } from "react";
 
