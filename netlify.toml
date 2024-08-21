@@ -14,4 +14,3 @@
     X-Frame-Options = "SAMEORIGIN"
     Access-Control-Allow-Origin = "*"
     X-Content-Type-Options = "nosniff"
-    Content-Security-Policy = "default-src 'self' fundkit.aarc.xyz netlify-cdp-loader.netlify.app; img-src * data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' fundkit.aarc.xyz netlify-cdp-loader.netlify.app; connect-src *; frame-src 'self' fundkit.aarc.xyz app.netlify.com web.meshconnect.com; style-src 'self' 'unsafe-inline';"
