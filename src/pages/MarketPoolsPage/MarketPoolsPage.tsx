@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Mode, Operation } from "components/Synthetics/GmSwap/GmSwapBox/types";
 import { getSyntheticsDepositMarketKey } from "config/localStorage";
@@ -9,8 +9,8 @@ import { MarketsInfoData, useMarketsInfoRequest, useMarketTokensData } from "dom
 import { useGmMarketsApy } from "domain/synthetics/markets/useGmMarketsApy";
 import { getTokenData } from "domain/synthetics/tokens";
 import { useChainId } from "lib/chains";
-import { getPageTitle, LONG, SHORT, SWAP } from "lib/legacy";
-import { useLocalStorageByChainId, useLocalStorageSerializeKey } from "lib/localStorage";
+import { getPageTitle } from "lib/legacy";
+import { useLocalStorageSerializeKey } from "lib/localStorage";
 import { EMPTY_OBJECT, getByKey } from "lib/objects";
 
 import SEO from "components/Common/SEO";
@@ -23,9 +23,7 @@ import { GmSwapBox } from "components/Synthetics/GmSwap/GmSwapBox/GmSwapBox";
 import { MarketStats } from "components/Synthetics/MarketStats/MarketStats";
 
 import "./MarketPoolsPage.scss";
-import { ARBITRUM, getConstant } from "config/chains";
-import { getTokenBySymbol } from "config/tokens";
-import { ZeroAddress } from "ethers";
+
 
 export function MarketPoolsPage() {
   const { chainId } = useChainId();
@@ -54,36 +52,6 @@ export function MarketPoolsPage() {
     }
   }, [marketsInfoData, mode, operation, selectedMarketKey]);
 
-
-  const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
-  const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", LONG);
-  const defaultTokenSelection = useMemo(
-    () => ({
-      [SWAP]: {
-        from: ZeroAddress,
-        to: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
-      },
-      [LONG]: {
-        from: ZeroAddress,
-        to: ZeroAddress,
-      },
-      [SHORT]: {
-        from: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
-        to: ZeroAddress,
-      },
-    }),
-    [chainId, defaultCollateralSymbol]
-  );
-  const [tokenSelection, setTokenSelection] = useLocalStorageByChainId(
-    chainId || 1,
-    "Exchange-token-selection-v2",
-    defaultTokenSelection
-  );
-
-  useEffect(() => {
-    console.log(swapOption, "crazzy")
-    console.log(tokenSelection, "tokenSelection")
-  }, [mode]);
 
   const marketInfo = getByKey(marketsInfoData, selectedMarketKey);
 

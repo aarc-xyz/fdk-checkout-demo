@@ -75,13 +75,6 @@ function AarcProvider({ children }) {
     defaultTokenSelection
   );
 
-  console.log(address, "address")
-  console.log(tokenSelection, "tokenSelection")
-
-  useEffect(() => {
-    console.log(swapOption, "swapOption")
-    console.log(tokenSelection, "tokenSelection")
-  }, [swapOption])
 
   const config: FKConfig = {
     appName: "Dapp Name",

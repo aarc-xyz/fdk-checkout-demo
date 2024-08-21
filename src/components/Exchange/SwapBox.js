@@ -1110,73 +1110,57 @@ export default function SwapBox(props) {
 
   const getPrimaryText = () => {
     if (isStopOrder) {
-      console.log('State: isStopOrder');
       return `Open a position`;
     }
     if (!active) {
-      console.log('State: !active');
       return `Connect Wallet`;
     }
     if (!isSupportedChain(chainId)) {
-      console.log('State: !isSupportedChain');
       return `Incorrect Network`;
     }
     const [error, errorType] = getError();
     if (error && errorType !== ErrorDisplayType.Modal) {
-      console.log('Error:', error);
       return error;
     }
 
     if (needPositionRouterApproval && isWaitingForPositionRouterApproval) {
-      console.log('State: needPositionRouterApproval && isWaitingForPositionRouterApproval');
       return `Enabling Leverage...`;
     }
     if (isPositionRouterApproving) {
-      console.log('State: isPositionRouterApproving');
       return `Enabling Leverage...`;
     }
     if (needPositionRouterApproval) {
-      console.log('State: needPositionRouterApproval');
       return `You already have sufficient balance`;
     }
 
     if (needApproval && isWaitingForApproval) {
-      console.log('State: needApproval && isWaitingForApproval');
       return `Waiting for Approval`;
     }
     if (isApproving) {
-      console.log('State: isApproving', fromToken.assetSymbol ?? fromToken.symbol);
       return `Approving ${fromToken.assetSymbol ?? fromToken.symbol}...`;
     }
     if (needApproval) {
-      console.log('State: needApproval');
       return `Approve ${fromToken.assetSymbol ?? fromToken.symbol}`;
     }
 
     if (needOrderBookApproval && isWaitingForPluginApproval) {
-      console.log('State: needOrderBookApproval && isWaitingForPluginApproval');
       return `Enabling Orders...`;
     }
     if (isPluginApproving) {
-      console.log('State: isPluginApproving');
       return `Enabling Orders...`;
     }
     if (needOrderBookApproval) {
-      console.log('State: needOrderBookApproval');
       return `Enable Orders`;
     }
 
     if (!isMarketOrder) {
-      console.log('State: !isMarketOrder', orderOption);
       return t`Create ${orderOption.charAt(0) + orderOption.substring(1).toLowerCase()} Order`;
     }
 
     if (isSwap) {
       if (toUsdMax !== undefined && toUsdMax < bigMath.mulDiv(fromUsdMin, 95n, 100n)) {
-        console.log('State: isSwap and High Slippage');
         return t`High Slippage, Swap Anyway`;
       }
-      console.log('State: isSwap');
       return t`Swap`;
     }
 
@@ -1201,15 +1185,12 @@ export default function SwapBox(props) {
           expandDecimals(1, indexTokenInfo.decimals)
         );
         if (fromTokenAddress === USDG_ADDRESS && nextToAmountUsd < bigMath.mulDiv(fromUsdMin, 98n, 100n)) {
-          console.log('State: High USDG Slippage');
           return t`High USDG Slippage, Long Anyway`;
         }
       }
-      console.log('State: isLong', toToken.symbol);
       return t`Long ${toToken.symbol}`;
     }
 
-    console.log('Default case:', toToken.symbol);
     return t`Short ${toToken.symbol}`;
   };
 
@@ -1604,7 +1585,8 @@ export default function SwapBox(props) {
       });
   };
 
-  const onSwapOptionChange = (opt) => {
+
+  const onSwapOptionChange = async (opt) => {
     setSwapOption(opt);
     if (orderOption === STOP) {
       setOrderOption(MARKET);
@@ -1617,6 +1599,8 @@ export default function SwapBox(props) {
 
     if (opt === SHORT && infoTokens) {
       const fromToken = getToken(chainId, tokenSelection[opt].from);
+      console.log("fromToken", fromToken);
+      await client?.updateDestinationTokenWithAddress(fromToken.address, chainId.toString());
       if (fromToken && fromToken.isStable) {
         setShortCollateralAddress(fromToken.address);
       } else {
@@ -1681,11 +1665,14 @@ export default function SwapBox(props) {
       return;
     }
 
-    console.log("toTokenAddress", fromTokenAddress);
-    //  await client.updateDestinationTokenWithAddress(fromTokenAddress, chainId);
-    if (getPrimaryText() == "You already have sufficient balance") {
+    const btnText = getPrimaryText();
+    if (btnText == "You already have sufficient balance") {
+      return;
+    } else if (btnText == "Enter an amount") {
       return;
     }
+
+
     setOpenModal(true);
 
 

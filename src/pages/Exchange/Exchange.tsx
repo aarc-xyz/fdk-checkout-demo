@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import useSWR from "swr";
 
-import { getConstant, getExplorerUrl } from "config/chains";
+import { ARBITRUM, getConstant, getExplorerUrl } from "config/chains";
 import { BASIS_POINTS_DIVISOR_BIGINT } from "config/factors";
 import { approvePlugin, cancelMultipleOrders, useExecutionFee } from "domain/legacy";
 import {
@@ -59,7 +59,9 @@ import { usePendingTxns } from "lib/usePendingTxns";
 import useWallet from "lib/wallets/useWallet";
 import "./Exchange.css";
 import { ThemeName, useTheme } from "@aarc-xyz/fund-kit-widget";
+import { useModal } from "@aarc-xyz/fund-kit-widget";
 const { ZeroAddress } = ethers;
+
 
 const PENDING_POSITION_VALID_DURATION = 600 * 1000;
 const UPDATED_POSITION_VALID_DURATION = 60 * 1000;
@@ -416,7 +418,6 @@ export const Exchange = forwardRef(
     const { setTheme } = useTheme()
 
     useEffect(() => {
-      console.log("setting theme")
       setTheme(ThemeName.DARK)
     }
       , [])
@@ -843,13 +844,22 @@ export const Exchange = forwardRef(
 
     const flagOrdersEnabled = true;
     const [orders] = useAccountOrders(flagOrdersEnabled);
-
+    const { client } = useModal()
     const [isWaitingForPluginApproval, setIsWaitingForPluginApproval] = useState(false);
     const [isWaitingForPositionRouterApproval, setIsWaitingForPositionRouterApproval] = useState(false);
     const [isPluginApproving, setIsPluginApproving] = useState(false);
     const [isPositionRouterApproving, setIsPositionRouterApproving] = useState(false);
     const [isCancelMultipleOrderProcessing, setIsCancelMultipleOrderProcessing] = useState(false);
     const [cancelOrderIdList, setCancelOrderIdList] = useState([]);
+
+
+    useEffect(() => {
+      updateTokenAddress();
+    }, [fromTokenAddress])
+
+    async function updateTokenAddress() {
+      await client?.updateDestinationTokenWithAddress(fromTokenAddress, ARBITRUM.toString());
+    }
 
     if (!flagOrdersEnabled) {
       orderOption = MARKET;
