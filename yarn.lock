@@ -14,9 +14,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aarc-xyz/eth-connector@npm:0.0.2":
-  version: 0.0.2
-  resolution: "@aarc-xyz/eth-connector@npm:0.0.2"
+"@aarc-xyz/eth-connector@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@aarc-xyz/eth-connector@npm:0.0.3"
   dependencies:
     "@rainbow-me/rainbowkit": 2.0.2
     viem: 2.8.12
@@ -26,7 +26,7 @@ __metadata:
     "@tanstack/react-query": ^5.28.4
     react: 18.3.1
     react-dom: 18.3.1
-  checksum: ccc8a8e8092654cf525a347cd57d93d04d6e62223ce9da30ab31a3dff8b8f6ce185f95ce3a4fcef2564cb71f644e77d0d67b89b92b618a4c47571bdacf85410e
+  checksum: 1a9322561e9efca1d83f3515a644000fd7d0744fb8240f605e5da1396d272f93195430b98f91bcd5b56c6de573699a2b01cc82aedb44a017a4b364c8749b330d
   languageName: node
   linkType: hard
 
@@ -12152,7 +12152,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gambit-interface@workspace:."
   dependencies:
-    "@aarc-xyz/eth-connector": 0.0.2
+    "@aarc-xyz/eth-connector": 0.0.3
     "@aarc-xyz/fund-kit-widget": 0.0.3
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
