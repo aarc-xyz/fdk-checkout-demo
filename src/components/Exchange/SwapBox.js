@@ -2,7 +2,9 @@ import { Trans, msg, t } from "@lingui/macro";
 import React, { useEffect, useMemo, useState } from "react";
 import Tooltip from "../Tooltip/Tooltip";
 import "./SwapBox.scss";
-
+import {
+  AarcFundKitModal,
+} from "@aarc-dev/fundkit-web-sdk"
 import { ethers } from "ethers";
 import useSWR from "swr";
 
@@ -91,6 +93,44 @@ import { useHistory } from "react-router-dom";
 import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
 import { useModal } from "@aarc-xyz/fund-kit-widget";
+
+const config = {
+  appName: "Dapp Name",
+  module: {
+    exchange: {
+      enabled: true,
+    },
+    onRamp: {
+      enabled: true,
+      onRampConfig: {
+        customerId: "323232323",
+        exchangeScreenTitle: "Deposit funds in your wallet",
+      },
+    },
+    bridgeAndSwap: {
+      enabled: true,
+      fetchOnlyDestinationBalance: false,
+      routeType: "Value",
+    },
+  },
+  destination: {
+    walletAddress: "0x0dfFe536e409E41Cd1aA13B3c23F066a387192C1",
+    // walletAddress: "EvCydMYoxkEbYtY7WpB8LGYQHVFCzHBYRjsWb91KnNJA",
+  },
+  appearance: {
+    dark: {
+      themeColor: "#FFF", // #2D2D2D
+      textColor: "#FFF", // #FFF
+      backgroundColor: "#2D2D2D", // #2D2D2D
+      highlightColor: "#2D2D2D", // #FFF
+    },
+    // roundness: 42,
+  },
+  apiKeys: {
+    // aarcSDK: import.meta.env.VITE_API_KEY_PROD,
+    aarcSDK: "2218cd67-c7ae-47e1-8d45-51b256c7ae33",
+  }
+}
 
 const SWAP_ICONS = {
   [LONG]: <LongIcon />,
@@ -1657,6 +1697,11 @@ export default function SwapBox(props) {
     });
   }
 
+
+
+  const aarcModal = new AarcFundKitModal(config)
+  aarcModal.init()
+
   const onClickPrimary = () => {
 
 
@@ -1673,7 +1718,9 @@ export default function SwapBox(props) {
     }
 
 
-    setOpenModal(true);
+    // setOpenModal(true);
+
+    aarcModal.openModal()
 
 
     // if (isStopOrder) {

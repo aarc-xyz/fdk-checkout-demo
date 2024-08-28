@@ -5,6 +5,13 @@ __metadata:
   version: 5
   cacheKey: 8
 
+"@aarc-dev/fundkit-web-sdk@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@aarc-dev/fundkit-web-sdk@npm:0.0.2"
+  checksum: b0ab7c003e22f3fccc30ce46fdd1ba50110178766b6e14c8fc01e0cc5e2ba8daee076f31fac4cdec3ae0968079a095ecd6dc93752b80910934b3103b2aa794e8
+  languageName: node
+  linkType: hard
+
 "@aarc-xyz/core-viem@npm:0.0.2":
   version: 0.0.2
   resolution: "@aarc-xyz/core-viem@npm:0.0.2"
@@ -12152,6 +12159,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gambit-interface@workspace:."
   dependencies:
+    "@aarc-dev/fundkit-web-sdk": 0.0.2
     "@aarc-xyz/eth-connector": 0.0.3
     "@aarc-xyz/fund-kit-widget": 0.0.3
     "@apollo/client": 3.5.6
