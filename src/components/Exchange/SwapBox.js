@@ -96,6 +96,57 @@ import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
 import { useModal, ThemeName } from "@aarc-xyz/fund-kit-widget";
 
+const config = {
+  appName: "Dapp Name",
+  module: {
+    exchange: {
+      enabled: true,
+    },
+    onRamp: {
+      enabled: true,
+      onRampConfig: {
+        customerId: "323232323",
+        exchangeScreenTitle: "Deposit funds in your wallet",
+      },
+    },
+    bridgeAndSwap: {
+      enabled: true,
+      fetchOnlyDestinationBalance: false,
+      routeType: "Value",
+    },
+  },
+  destination: {
+    chainId: "",
+    walletAddress: "",
+    tokenAddress: "",
+    requestedAmount: 10,
+
+  },
+  appearance: {
+    // themeColor: "#2D2D2D",
+    // textColor: "#2D2D2D",
+    // backgroundColor: "#FFF",
+    // highlightColor: "#F0F0F0",
+    dark: {
+      themeColor: "#2C42FC", // #2D2D2D
+      textColor: "#FFF", // #FFF
+      backgroundColor: "#16182E", // #2D2D2D
+      highlightColor: "#08091B", // #FFF
+      borderColor: "#24263B",
+    },
+    theme: ThemeName.DARK,
+    // roundness: 42,
+  },
+  origin: window.location.origin,
+
+  apiKeys: {
+    aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
+  },
+}
+
+export const aarcModal = new AarcFundKitModal(config)
+aarcModal.init()
+
 
 
 const SWAP_ICONS = {
@@ -228,53 +279,57 @@ export default function SwapBox(props) {
 
 
 
-  const config = {
-    appName: "Dapp Name",
-    module: {
-      exchange: {
-        enabled: true,
-      },
-      onRamp: {
-        enabled: true,
-        onRampConfig: {
-          customerId: "323232323",
-          exchangeScreenTitle: "Deposit funds in your wallet",
-        },
-      },
-      bridgeAndSwap: {
-        enabled: true,
-        fetchOnlyDestinationBalance: false,
-        routeType: "Value",
-      },
-    },
-    destination: {
-      chainId: chainId,
-      walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-      tokenAddress: tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-      requestedAmount: 10,
+  // const config = {
+  //   appName: "Dapp Name",
+  //   module: {
+  //     exchange: {
+  //       enabled: true,
+  //     },
+  //     onRamp: {
+  //       enabled: true,
+  //       onRampConfig: {
+  //         customerId: "323232323",
+  //         exchangeScreenTitle: "Deposit funds in your wallet",
+  //       },
+  //     },
+  //     bridgeAndSwap: {
+  //       enabled: true,
+  //       fetchOnlyDestinationBalance: false,
+  //       routeType: "Value",
+  //     },
+  //   },
+  //   destination: {
+  //     chainId: chainId,
+  //     walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
+  //     tokenAddress: tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+  //     requestedAmount: 10,
 
-    },
-    appearance: {
-      // themeColor: "#2D2D2D",
-      // textColor: "#2D2D2D",
-      // backgroundColor: "#FFF",
-      // highlightColor: "#F0F0F0",
-      dark: {
-        themeColor: "#2C42FC", // #2D2D2D
-        textColor: "#FFF", // #FFF
-        backgroundColor: "#16182E", // #2D2D2D
-        highlightColor: "#08091B", // #FFF
-        borderColor: "#24263B",
-      },
-      theme: ThemeName.DARK,
-      // roundness: 42,
-    },
+  //   },
+  //   appearance: {
+  //     // themeColor: "#2D2D2D",
+  //     // textColor: "#2D2D2D",
+  //     // backgroundColor: "#FFF",
+  //     // highlightColor: "#F0F0F0",
+  //     dark: {
+  //       themeColor: "#2C42FC", // #2D2D2D
+  //       textColor: "#FFF", // #FFF
+  //       backgroundColor: "#16182E", // #2D2D2D
+  //       highlightColor: "#08091B", // #FFF
+  //       borderColor: "#24263B",
+  //     },
+  //     theme: ThemeName.DARK,
+  //     // roundness: 42,
+  //   },
+  //   origin: window.location.origin,
+
+  //   apiKeys: {
+  //     aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
+  //   },
+  // }
 
 
-    apiKeys: {
-      aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
-    },
-  }
+
+
 
 
   const isLong = swapOption === LONG;
@@ -445,11 +500,14 @@ export default function SwapBox(props) {
 
   const fromAmount = parseValue(fromValue, fromToken && fromToken.decimals);
   const toAmount = parseValue(toValue, toToken && toToken.decimals);
-  // useEffect(() => {
 
-  //   setDepositAmount(fromValue)
 
-  // }, [fromValue])
+  useEffect(() => {
+    aarcModal.updateDestinationWalletAddress(address || "")
+    aarcModal.updateDestinationToken(tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", chainId, +fromValue.toString())
+  }, [tokenSelection?.[swapOption].from, fromValue])
+
+
   const isPotentialWrap = (fromToken.isNative && toToken.isWrapped) || (fromToken.isWrapped && toToken.isNative);
   const isWrapOrUnwrap = isSwap && isPotentialWrap;
   const needApproval =
@@ -1288,7 +1346,8 @@ export default function SwapBox(props) {
 
   const onFromValueChange = (e) => {
     setAnchorOnFromAmount(true);
-    setDepositAmount(e.target.value)
+    // setDepositAmount(e.target.value)
+    aarcModal.updateRequestedAmount(e.target.value)
     setFromValue(e.target.value);
   };
 
@@ -1733,8 +1792,7 @@ export default function SwapBox(props) {
 
 
 
-  const aarcModal = new AarcFundKitModal(config)
-  aarcModal.init()
+
 
   const onClickPrimary = () => {
 
@@ -1753,6 +1811,7 @@ export default function SwapBox(props) {
 
 
     // setOpenModal(true);
+
 
     aarcModal.openModal()
 

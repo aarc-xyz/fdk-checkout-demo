@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aarc-dev/fundkit-web-sdk": "0.0.4",
+    "@aarc-dev/fundkit-web-sdk": "0.0.5",
     "@aarc-xyz/eth-connector": "0.0.3",
     "@aarc-xyz/fund-kit-widget": "0.0.3",
     "@apollo/client": "3.5.6",
