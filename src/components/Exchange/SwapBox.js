@@ -7,6 +7,7 @@ import {
 } from "@aarc-dev/fundkit-web-sdk"
 import { ethers } from "ethers";
 import useSWR from "swr";
+import { useAccount } from "wagmi";
 
 import { BsArrowRight } from "react-icons/bs";
 import { IoMdSwap } from "react-icons/io";
@@ -47,6 +48,7 @@ import Tab from "../Tab/Tab";
 import ConfirmationBox from "./ConfirmationBox";
 import ExchangeInfoRow from "./ExchangeInfoRow";
 import OrdersToa from "./OrdersToa";
+import { getTokenBySymbol } from "config/tokens";
 
 import PositionRouter from "abis/PositionRouter.json";
 import Router from "abis/Router.json";
@@ -92,45 +94,9 @@ import { MAX_METAMASK_MOBILE_DECIMALS } from "config/ui";
 import { useHistory } from "react-router-dom";
 import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
-import { useModal } from "@aarc-xyz/fund-kit-widget";
+import { useModal, ThemeName } from "@aarc-xyz/fund-kit-widget";
 
-const config = {
-  appName: "Dapp Name",
-  module: {
-    exchange: {
-      enabled: true,
-    },
-    onRamp: {
-      enabled: true,
-      onRampConfig: {
-        customerId: "323232323",
-        exchangeScreenTitle: "Deposit funds in your wallet",
-      },
-    },
-    bridgeAndSwap: {
-      enabled: true,
-      fetchOnlyDestinationBalance: false,
-      routeType: "Value",
-    },
-  },
-  destination: {
-    walletAddress: "0x0dfFe536e409E41Cd1aA13B3c23F066a387192C1",
-    // walletAddress: "EvCydMYoxkEbYtY7WpB8LGYQHVFCzHBYRjsWb91KnNJA",
-  },
-  appearance: {
-    dark: {
-      themeColor: "#FFF", // #2D2D2D
-      textColor: "#FFF", // #FFF
-      backgroundColor: "#2D2D2D", // #2D2D2D
-      highlightColor: "#2D2D2D", // #FFF
-    },
-    // roundness: 42,
-  },
-  apiKeys: {
-    // aarcSDK: import.meta.env.VITE_API_KEY_PROD,
-    aarcSDK: "2218cd67-c7ae-47e1-8d45-51b256c7ae33",
-  }
-}
+
 
 const SWAP_ICONS = {
   [LONG]: <LongIcon />,
@@ -237,10 +203,78 @@ export default function SwapBox(props) {
   }
 
 
-  // useEffect(() => {
-  //   client?.updateDestinationTokenWithAddress(fromTokenAddress, chainId.toString());
-  // }, [])
+  let { address } = useAccount();
 
+  // const chainId = ARBITRUM
+  const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
+  // const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", LONG);
+  const defaultTokenSelection = useMemo(
+    () => ({
+      [SWAP]: {
+        from: ZeroAddress,
+        to: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
+      },
+      [LONG]: {
+        from: ZeroAddress,
+        to: ZeroAddress,
+      },
+      [SHORT]: {
+        from: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
+        to: ZeroAddress,
+      },
+    }),
+    [chainId, defaultCollateralSymbol]
+  );
+
+
+
+  const config = {
+    appName: "Dapp Name",
+    module: {
+      exchange: {
+        enabled: true,
+      },
+      onRamp: {
+        enabled: true,
+        onRampConfig: {
+          customerId: "323232323",
+          exchangeScreenTitle: "Deposit funds in your wallet",
+        },
+      },
+      bridgeAndSwap: {
+        enabled: true,
+        fetchOnlyDestinationBalance: false,
+        routeType: "Value",
+      },
+    },
+    destination: {
+      chainId: chainId,
+      walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
+      tokenAddress: tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      requestedAmount: 10,
+
+    },
+    appearance: {
+      // themeColor: "#2D2D2D",
+      // textColor: "#2D2D2D",
+      // backgroundColor: "#FFF",
+      // highlightColor: "#F0F0F0",
+      dark: {
+        themeColor: "#2C42FC", // #2D2D2D
+        textColor: "#FFF", // #FFF
+        backgroundColor: "#16182E", // #2D2D2D
+        highlightColor: "#08091B", // #FFF
+        borderColor: "#24263B",
+      },
+      theme: ThemeName.DARK,
+      // roundness: 42,
+    },
+
+
+    apiKeys: {
+      aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
+    },
+  }
 
 
   const isLong = swapOption === LONG;
