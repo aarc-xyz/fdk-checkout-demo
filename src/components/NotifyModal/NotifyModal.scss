@@ -1,5 +1,5 @@
 .NotifyModal {
-  max-width: 31rem;
+  max-width: 60rem;
   line-height: 1.5;
   font-size: var(--font-base);
   display: flex;
@@ -7,12 +7,26 @@
   align-items: center;
 }
 
+.NotifyModal p {
+  margin: 20px 0px;
+}
+
+.NotifyModal ol {
+  list-style: auto;
+  margin: 0px 20px;
+}
 .NotifyModal-bullet-list {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   margin-top: 3rem;
   margin-bottom: 3rem;
+}
+
+.agree-checkbox {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .NotifyModal-bullet {

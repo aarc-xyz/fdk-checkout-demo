@@ -47,7 +47,7 @@ export const GlobalStateProvider = memo(
   }>) => {
     const [tradePageVersion, setTradePageVersion] = useTradePageVersion();
 
-    const [notifyModalOpen, setNotifyModalOpen] = useState(false);
+    const [notifyModalOpen, setNotifyModalOpen] = useState(true);
 
     const [redirectPopupTimestamp, setRedirectPopupTimestamp] = useLocalStorage<number | undefined>(
       REDIRECT_POPUP_TIMESTAMP_KEY,

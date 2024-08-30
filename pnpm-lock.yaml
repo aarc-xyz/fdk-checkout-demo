@@ -10,6 +10,9 @@ overrides:
   jest-runner: patch:jest-runner@npm:27.5.1#.yarn/patches/jest-runner-npm-27.5.1-2ed2c1cda8
 
 dependencies:
+  '@aarc-dev/fundkit-web-sdk':
+    specifier: 0.0.4
+    version: 0.0.4
   '@aarc-xyz/eth-connector':
     specifier: 0.0.3
     version: 0.0.3(@aarc-xyz/fund-kit-widget@0.0.3)(@tanstack/react-query@5.25.0)(@types/react@18.2.64)(immer@10.1.1)(react-dom@18.2.0)(react-native@0.75.2)(react@18.2.0)(rollup@2.79.1)(typescript@5.4.2)
@@ -293,6 +296,10 @@ devDependencies:
     version: 8.3.2(typescript@5.4.2)
 
 packages:
+
+  /@aarc-dev/fundkit-web-sdk@0.0.4:
+    resolution: {integrity: sha512-FfexWVtjnIY4ArPYvqViJeEE9Vac9UCjsgzscl7aG3MdZXDpHItU0+uA5I7usRtSwFFJt9XOe7UKq7T6uQVzqw==}
+    dev: false
 
   /@aarc-xyz/core-viem@0.0.2(typescript@5.4.2):
     resolution: {integrity: sha512-2p34cvtAMEGOyZOhfKk5gdiaIukUY8mAUWHV1GlfEiCgMjb+xpMoCaEkPKk/C30MUrhlT+m6kYm/xafUazHkCg==}
