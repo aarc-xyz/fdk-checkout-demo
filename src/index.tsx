@@ -1,7 +1,7 @@
 import "regenerator-runtime/runtime";
 import "styles/tailwind.css";
 
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -10,8 +10,6 @@ import App from "./App/App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
-import "@aarc-xyz/eth-connector/styles.css"
-import "@aarc-xyz/fund-kit-widget/styles.css"
 
 
 

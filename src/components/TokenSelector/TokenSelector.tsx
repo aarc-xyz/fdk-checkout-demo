@@ -15,7 +15,6 @@ import { convertToUsd } from "domain/synthetics/tokens";
 import SearchInput from "components/SearchInput/SearchInput";
 import TokenIcon from "components/TokenIcon/TokenIcon";
 import { bigMath } from "lib/bigmath";
-import { useModal } from "@aarc-xyz/fund-kit-widget";
 import { useAccount } from "wagmi"
 import Loader from "components/Common/Loader";
 type TokenState = {
@@ -48,7 +47,6 @@ export default function TokenSelector(props: Props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   let tokenInfo: TokenInfo | undefined;
-  const { client } = useModal()
   const [loading, setLoading] = useState(false)
 
   try {
@@ -79,8 +77,7 @@ export default function TokenSelector(props: Props) {
 
   const onSelectToken = async (token) => {
     setLoading(true)
-    if (chainId)
-      await client?.updateDestinationTokenWithAddress(token.address, chainId.toString());
+
     setLoading(false)
 
     setIsModalVisible(false);

@@ -94,7 +94,6 @@ import { MAX_METAMASK_MOBILE_DECIMALS } from "config/ui";
 import { useHistory } from "react-router-dom";
 import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
-import { useModal, ThemeName } from "@aarc-xyz/fund-kit-widget";
 
 const config = {
   appName: "GMX",
@@ -130,7 +129,7 @@ const config = {
       highlightColor: "#08091B", // #FFF
       borderColor: "#24263B",
     },
-    theme: ThemeName.DARK,
+    theme: 'dark',
     // roundness: 42,
   },
   origin: window.location.origin,
@@ -242,7 +241,6 @@ export default function SwapBox(props) {
   const history = useHistory();
   const localizedSwapLabels = useLocalizedMap(SWAP_LABELS);
   const localizedOrderOptionLabels = useLocalizedMap(ORDER_OPTION_LABELS);
-  const { openModal, setOpenModal, client, setDepositAmount, updateDestinationTokenWithAddress } = useModal()
 
   let allowedSlippage = savedSlippageAmount;
   if (isHigherSlippageAllowed) {
@@ -1652,13 +1650,11 @@ export default function SwapBox(props) {
 
     if (opt === SHORT && infoTokens) {
       const fromToken = getToken(chainId, tokenSelection[opt].from);
-      console.log("fromToken", fromToken);
-      await client?.updateDestinationTokenWithAddress(fromToken.address, chainId.toString());
+
       if (fromToken && fromToken.isStable) {
         setShortCollateralAddress(fromToken.address);
       } else {
         const stableToken = getMostAbundantStableToken(chainId, infoTokens);
-        setShortCollateralAddress(stableToken.address);
       }
     }
 

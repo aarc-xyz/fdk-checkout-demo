@@ -11,14 +11,17 @@ overrides:
 
 dependencies:
   '@aarc-dev/fundkit-web-sdk':
-    specifier: 0.0.4
-    version: 0.0.4
+    specifier: 0.0.5
+    version: 0.0.5
   '@aarc-xyz/eth-connector':
     specifier: 0.0.3
     version: 0.0.3(@aarc-xyz/fund-kit-widget@0.0.3)(@tanstack/react-query@5.25.0)(@types/react@18.2.64)(immer@10.1.1)(react-dom@18.2.0)(react-native@0.75.2)(react@18.2.0)(rollup@2.79.1)(typescript@5.4.2)
   '@aarc-xyz/fund-kit-widget':
     specifier: 0.0.3
     version: 0.0.3(@tanstack/react-query@5.25.0)(@types/react@18.2.64)(date-fns@2.27.0)(immer@10.1.1)(react-dom@18.2.0)(react-native@0.75.2)(react@18.2.0)(rollup@2.79.1)(typescript@5.4.2)(vite@5.4.2)
+  '@aarc-xyz/fundkit-web-sdk':
+    specifier: 0.0.1
+    version: 0.0.1
   '@apollo/client':
     specifier: 3.5.6
     version: 3.5.6(graphql@15.8.0)(react@18.2.0)
@@ -297,8 +300,8 @@ devDependencies:
 
 packages:
 
-  /@aarc-dev/fundkit-web-sdk@0.0.4:
-    resolution: {integrity: sha512-FfexWVtjnIY4ArPYvqViJeEE9Vac9UCjsgzscl7aG3MdZXDpHItU0+uA5I7usRtSwFFJt9XOe7UKq7T6uQVzqw==}
+  /@aarc-dev/fundkit-web-sdk@0.0.5:
+    resolution: {integrity: sha512-7KxFMw5Ckylv5kFfOfnyJ8PLqhwXN8+TgXB6Ip6KvB2DyJujALoBkzCwdt1BTF1vGcKQf1qy4lQ/7tbUO6G3YA==}
     dev: false
 
   /@aarc-xyz/core-viem@0.0.2(typescript@5.4.2):
@@ -412,6 +415,10 @@ packages:
       - utf-8-validate
       - vite
       - zod
+    dev: false
+
+  /@aarc-xyz/fundkit-web-sdk@0.0.1:
+    resolution: {integrity: sha512-MhTdLCszW/IPBKByQ5NjBzFeAlGRSAcAW737YC93V8xv7j4ylVS7sIb+uI4RjrIRL35FL4t1T+QtBNChX7e4IA==}
     dev: false
 
   /@adraffy/ens-normalize@1.10.0:
