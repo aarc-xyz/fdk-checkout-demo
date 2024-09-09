@@ -17,9 +17,7 @@ import { HeaderLink } from "./HeaderLink";
 import useWallet from "lib/wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useTradePageVersion } from "lib/useTradePageVersion";
-import { useModal } from "@aarc-xyz/fund-kit-widget";
-import Button from "components/Button/Button";
-import { useEffect } from "react";
+
 
 type Props = {
   openSettings: () => void;
@@ -64,7 +62,6 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
   const { openConnectModal } = useConnectModal();
   const showConnectionOptions = !isHomeSite();
   const [tradePageVersion] = useTradePageVersion();
-  const { setOpenModal } = useModal()
   const tradeLink = tradePageVersion === 2 ? "/trade" : "/v1";
 
   const selectorLabel = getChainName(chainId);

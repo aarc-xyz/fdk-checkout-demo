@@ -2,9 +2,12 @@ import { Trans, msg, t } from "@lingui/macro";
 import React, { useEffect, useMemo, useState } from "react";
 import Tooltip from "../Tooltip/Tooltip";
 import "./SwapBox.scss";
-
+import {
+  AarcFundKitModal,
+} from "@aarc-xyz/fundkit-web-sdk"
 import { ethers } from "ethers";
 import useSWR from "swr";
+import { useAccount } from "wagmi";
 
 import { BsArrowRight } from "react-icons/bs";
 import { IoMdSwap } from "react-icons/io";
@@ -45,6 +48,7 @@ import Tab from "../Tab/Tab";
 import ConfirmationBox from "./ConfirmationBox";
 import ExchangeInfoRow from "./ExchangeInfoRow";
 import OrdersToa from "./OrdersToa";
+import { getTokenBySymbol } from "config/tokens";
 
 import PositionRouter from "abis/PositionRouter.json";
 import Router from "abis/Router.json";
@@ -90,7 +94,55 @@ import { MAX_METAMASK_MOBILE_DECIMALS } from "config/ui";
 import { useHistory } from "react-router-dom";
 import { bigMath } from "lib/bigmath";
 import { useLocalizedMap } from "lib/i18n";
-import { useModal } from "@aarc-xyz/fund-kit-widget";
+
+const config = {
+  appName: "GMX",
+  module: {
+    exchange: {
+      enabled: true,
+    },
+    onRamp: {
+      enabled: true,
+      onRampConfig: {
+        customerId: "323232323",
+        exchangeScreenTitle: "Deposit funds in your wallet",
+      },
+    },
+    bridgeAndSwap: {
+      enabled: true,
+      fetchOnlyDestinationBalance: false,
+      routeType: "Value",
+    },
+  },
+  destination: {
+    chainId: "",
+    walletAddress: "",
+    tokenAddress: "",
+    requestedAmount: 10,
+
+  },
+  appearance: {
+    dark: {
+      themeColor: "#2C42FC", // #2D2D2D
+      textColor: "#FFF", // #FFF
+      backgroundColor: "#16182E", // #2D2D2D
+      highlightColor: "#08091B", // #FFF
+      borderColor: "#24263B",
+    },
+    theme: 'dark',
+    // roundness: 42,
+  },
+  origin: window.location.origin,
+
+  apiKeys: {
+    aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
+  },
+}
+
+export const aarcModal = new AarcFundKitModal(config)
+aarcModal.init()
+
+
 
 const SWAP_ICONS = {
   [LONG]: <LongIcon />,
@@ -189,7 +241,6 @@ export default function SwapBox(props) {
   const history = useHistory();
   const localizedSwapLabels = useLocalizedMap(SWAP_LABELS);
   const localizedOrderOptionLabels = useLocalizedMap(ORDER_OPTION_LABELS);
-  const { openModal, setOpenModal, client, setDepositAmount, updateDestinationTokenWithAddress } = useModal()
 
   let allowedSlippage = savedSlippageAmount;
   if (isHigherSlippageAllowed) {
@@ -197,11 +248,7 @@ export default function SwapBox(props) {
   }
 
 
-  // useEffect(() => {
-  //   client?.updateDestinationTokenWithAddress(fromTokenAddress, chainId.toString());
-  // }, [])
-
-
+  let { address } = useAccount();
 
   const isLong = swapOption === LONG;
   const isShort = swapOption === SHORT;
@@ -371,11 +418,14 @@ export default function SwapBox(props) {
 
   const fromAmount = parseValue(fromValue, fromToken && fromToken.decimals);
   const toAmount = parseValue(toValue, toToken && toToken.decimals);
-  // useEffect(() => {
 
-  //   setDepositAmount(fromValue)
 
-  // }, [fromValue])
+  useEffect(() => {
+    aarcModal.updateDestinationWalletAddress(address || "")
+    aarcModal.updateDestinationToken(tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", chainId, +fromValue.toString())
+  }, [tokenSelection?.[swapOption].from, fromValue])
+
+
   const isPotentialWrap = (fromToken.isNative && toToken.isWrapped) || (fromToken.isWrapped && toToken.isNative);
   const isWrapOrUnwrap = isSwap && isPotentialWrap;
   const needApproval =
@@ -1214,7 +1264,8 @@ export default function SwapBox(props) {
 
   const onFromValueChange = (e) => {
     setAnchorOnFromAmount(true);
-    setDepositAmount(e.target.value)
+    // setDepositAmount(e.target.value)
+    aarcModal.updateRequestedAmount(e.target.value)
     setFromValue(e.target.value);
   };
 
@@ -1599,13 +1650,11 @@ export default function SwapBox(props) {
 
     if (opt === SHORT && infoTokens) {
       const fromToken = getToken(chainId, tokenSelection[opt].from);
-      console.log("fromToken", fromToken);
-      await client?.updateDestinationTokenWithAddress(fromToken.address, chainId.toString());
+
       if (fromToken && fromToken.isStable) {
         setShortCollateralAddress(fromToken.address);
       } else {
         const stableToken = getMostAbundantStableToken(chainId, infoTokens);
-        setShortCollateralAddress(stableToken.address);
       }
     }
 
@@ -1657,6 +1706,10 @@ export default function SwapBox(props) {
     });
   }
 
+
+
+
+
   const onClickPrimary = () => {
 
 
@@ -1673,7 +1726,10 @@ export default function SwapBox(props) {
     }
 
 
-    setOpenModal(true);
+    // setOpenModal(true);
+
+
+    aarcModal.openModal()
 
 
     // if (isStopOrder) {

@@ -58,8 +58,7 @@ import { getLeverage, getLeverageStr } from "lib/positions/getLeverage";
 import { usePendingTxns } from "lib/usePendingTxns";
 import useWallet from "lib/wallets/useWallet";
 import "./Exchange.css";
-import { ThemeName, useTheme } from "@aarc-xyz/fund-kit-widget";
-import { useModal } from "@aarc-xyz/fund-kit-widget";
+
 const { ZeroAddress } = ethers;
 
 
@@ -415,12 +414,6 @@ export const Exchange = forwardRef(
     const [updatedPositions, setUpdatedPositions] = useState({});
     const [pendingTxns, setPendingTxns] = usePendingTxns();
 
-    const { setTheme } = useTheme()
-
-    useEffect(() => {
-      setTheme(ThemeName.DARK)
-    }
-      , [])
 
     const hideBanner = () => {
       const hiddenLimit = new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000);
@@ -844,22 +837,12 @@ export const Exchange = forwardRef(
 
     const flagOrdersEnabled = true;
     const [orders] = useAccountOrders(flagOrdersEnabled);
-    const { client } = useModal()
     const [isWaitingForPluginApproval, setIsWaitingForPluginApproval] = useState(false);
     const [isWaitingForPositionRouterApproval, setIsWaitingForPositionRouterApproval] = useState(false);
     const [isPluginApproving, setIsPluginApproving] = useState(false);
     const [isPositionRouterApproving, setIsPositionRouterApproving] = useState(false);
     const [isCancelMultipleOrderProcessing, setIsCancelMultipleOrderProcessing] = useState(false);
     const [cancelOrderIdList, setCancelOrderIdList] = useState([]);
-
-
-    useEffect(() => {
-      updateTokenAddress();
-    }, [fromTokenAddress])
-
-    async function updateTokenAddress() {
-      await client?.updateDestinationTokenWithAddress(fromTokenAddress, ARBITRUM.toString());
-    }
 
     if (!flagOrdersEnabled) {
       orderOption = MARKET;
