@@ -64,6 +64,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aarc-xyz/fundkit-web-sdk@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@aarc-xyz/fundkit-web-sdk@npm:0.0.1"
+  checksum: 6aeb669d5db3b19fec8e9980be7bd427e63940a9c1b40154386cdf33d30d135b465dd2bf5df79a5e088361871f7f115a7a48100d5fcceebf5a49525fe1c5cb5d
+  languageName: node
+  linkType: hard
+
 "@adraffy/ens-normalize@npm:1.10.0":
   version: 1.10.0
   resolution: "@adraffy/ens-normalize@npm:1.10.0"
@@ -12162,6 +12169,7 @@ __metadata:
     "@aarc-dev/fundkit-web-sdk": 0.0.5
     "@aarc-xyz/eth-connector": 0.0.3
     "@aarc-xyz/fund-kit-widget": 0.0.3
+    "@aarc-xyz/fundkit-web-sdk": 0.0.1
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
     "@binance/w3w-utils": 1.1.4

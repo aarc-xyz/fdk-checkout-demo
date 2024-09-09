@@ -4,7 +4,7 @@ import Tooltip from "../Tooltip/Tooltip";
 import "./SwapBox.scss";
 import {
   AarcFundKitModal,
-} from "@aarc-dev/fundkit-web-sdk"
+} from "@aarc-xyz/fundkit-web-sdk"
 import { ethers } from "ethers";
 import useSWR from "swr";
 import { useAccount } from "wagmi";
@@ -97,7 +97,7 @@ import { useLocalizedMap } from "lib/i18n";
 import { useModal, ThemeName } from "@aarc-xyz/fund-kit-widget";
 
 const config = {
-  appName: "Dapp Name",
+  appName: "GMX",
   module: {
     exchange: {
       enabled: true,
@@ -123,10 +123,6 @@ const config = {
 
   },
   appearance: {
-    // themeColor: "#2D2D2D",
-    // textColor: "#2D2D2D",
-    // backgroundColor: "#FFF",
-    // highlightColor: "#F0F0F0",
     dark: {
       themeColor: "#2C42FC", // #2D2D2D
       textColor: "#FFF", // #FFF
@@ -255,82 +251,6 @@ export default function SwapBox(props) {
 
 
   let { address } = useAccount();
-
-  // const chainId = ARBITRUM
-  const defaultCollateralSymbol = getConstant(chainId, "defaultCollateralSymbol");
-  // const [swapOption, setSwapOption] = useLocalStorageByChainId(chainId, "Swap-option-v2", LONG);
-  const defaultTokenSelection = useMemo(
-    () => ({
-      [SWAP]: {
-        from: ZeroAddress,
-        to: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
-      },
-      [LONG]: {
-        from: ZeroAddress,
-        to: ZeroAddress,
-      },
-      [SHORT]: {
-        from: getTokenBySymbol(chainId, defaultCollateralSymbol).address,
-        to: ZeroAddress,
-      },
-    }),
-    [chainId, defaultCollateralSymbol]
-  );
-
-
-
-  // const config = {
-  //   appName: "Dapp Name",
-  //   module: {
-  //     exchange: {
-  //       enabled: true,
-  //     },
-  //     onRamp: {
-  //       enabled: true,
-  //       onRampConfig: {
-  //         customerId: "323232323",
-  //         exchangeScreenTitle: "Deposit funds in your wallet",
-  //       },
-  //     },
-  //     bridgeAndSwap: {
-  //       enabled: true,
-  //       fetchOnlyDestinationBalance: false,
-  //       routeType: "Value",
-  //     },
-  //   },
-  //   destination: {
-  //     chainId: chainId,
-  //     walletAddress: address || "0x7C1a357e76E0D118bB9E2aCB3Ec4789922f3e050",
-  //     tokenAddress: tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-  //     requestedAmount: 10,
-
-  //   },
-  //   appearance: {
-  //     // themeColor: "#2D2D2D",
-  //     // textColor: "#2D2D2D",
-  //     // backgroundColor: "#FFF",
-  //     // highlightColor: "#F0F0F0",
-  //     dark: {
-  //       themeColor: "#2C42FC", // #2D2D2D
-  //       textColor: "#FFF", // #FFF
-  //       backgroundColor: "#16182E", // #2D2D2D
-  //       highlightColor: "#08091B", // #FFF
-  //       borderColor: "#24263B",
-  //     },
-  //     theme: ThemeName.DARK,
-  //     // roundness: 42,
-  //   },
-  //   origin: window.location.origin,
-
-  //   apiKeys: {
-  //     aarcSDK: process.env.REACT_APP_AARC_API_KEY || "",
-  //   },
-  // }
-
-
-
-
-
 
   const isLong = swapOption === LONG;
   const isShort = swapOption === SHORT;
