@@ -17,6 +17,8 @@ import { HeaderLink } from "./HeaderLink";
 import useWallet from "lib/wallets/useWallet";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useTradePageVersion } from "lib/useTradePageVersion";
+import Button from "components/Button/Button";
+import { useNotifyModalState } from "lib/useNotifyModalState";
 
 
 type Props = {
@@ -62,6 +64,8 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
   const { openConnectModal } = useConnectModal();
   const showConnectionOptions = !isHomeSite();
   const [tradePageVersion] = useTradePageVersion();
+  const { setNotifyModalOpen } = useNotifyModalState();
+
   const tradeLink = tradePageVersion === 2 ? "/trade" : "/v1";
 
   const selectorLabel = getChainName(chainId);
@@ -103,11 +107,11 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
 
   return (
     <div className="App-header-user">
-      {/* <div data-qa="trade" className={cx("App-header-trade-link")}>
-        <Button className="default-btn" variant="primary" onClick={() => { setOpenModal(true) }}>
-          {isHomeSite() ? <Trans>Launch App</Trans> : <Trans>Trade</Trans>}
+      <div data-qa="trade" className={cx("App-header-trade-link")}>
+        <Button className="default-btn" variant="primary" onClick={() => {setNotifyModalOpen(true)}}>
+          {isHomeSite() ? <Trans>Instructions</Trans> : <Trans>Instructions</Trans>}
         </Button>
-      </div> */}
+      </div>
 
       {showConnectionOptions ? (
         <>
@@ -132,3 +136,4 @@ export function AppHeaderUser({ openSettings, small, disconnectAccountAndCloseSe
     </div>
   );
 }
+

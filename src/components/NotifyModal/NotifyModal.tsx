@@ -19,23 +19,21 @@ export function NotifyModal() {
       <div className="NotifyModal">
         <div>
           <h1>Welcome to the Aarc GMX Demo!</h1>
-          <p className="">
-            Aarc revolutionizes cross-chain trading, allowing you to open long/short positions or swap assets across any blockchain, DEX, and using any asset.
-            <br></br>
-            <br></br>
-            <strong>Here's how to get started:</strong>
+          <p>
+            Aarc allows you to use any token from anywhere. With this demo, you can open long/short positions or swap assets across any blockchain or centralized exchange (CEX) and utilize any asset.
           </p>
+          <p><strong>Here's how to get started:</strong></p>
           <ol className="NotifyModal-bullet-list">
+            <li>Connect your wallet (e.g., MetaMask) and switch to Arbitrum Mainnet if needed.</li>
             <li>Choose your trading action: Long, Short, or Swap.</li>
-            <li>Select your preferred payment asset (any token from supported chains).</li>
+            <li>Select your preferred payment asset from the list of supported tokens.</li>
             <li>Enter your desired trade amount in the "Pay" field.</li>
-            <li>Adjust your leverage using the slider (1x to 50x).</li>
-            <li>Review trade details carefully, including fees, potential profit/loss, and liquidation price.</li>
-            <li>Click "Deposit" to launch the Aarc Commerce interface for simulated funding.</li>
+            <li>Review trade details carefully. Adjust your leverage using the slider (1x to 50x).</li>
+            <li>Click "Deposit" to launch the Aarc interface for funding.</li>
           </ol>
           <p><strong>Important:</strong></p>
           <p>
-            Real deposits from this demo are possible on the mainnet. For your safety, funds will be transferred directly to your wallet instead of the GMX pools. This ensures your assets remain safe as you explore the platform's features.
+            This demo works on Mainnets with real money. For your safety, all funds you deposit will be transferred directly and only to your wallet address, not to GMX. This ensures your assets remain safe as you explore the platform.
           </p>
           <div className="agree-checkbox">
             <Checkbox isChecked={agreeTerms} setIsChecked={setAgreeTerms} />
@@ -56,4 +54,3 @@ export function NotifyModal() {
     </Modal>
   );
 }
-
