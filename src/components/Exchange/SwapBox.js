@@ -4,7 +4,7 @@ import Tooltip from "../Tooltip/Tooltip";
 import "./SwapBox.scss";
 import {
   AarcFundKitModal,
-} from "@aarc-xyz/fundkit-web-sdk"
+} from "@aarc-dev/fundkit-web-sdk"
 import { ethers } from "ethers";
 import useSWR from "swr";
 import { useAccount } from "wagmi";
@@ -122,16 +122,21 @@ const config = {
 
   },
   appearance: {
+    themeColor: "#A5E547",
+    textColor: "#2D2D2D",
+    backgroundColor: "#FAFAFA",
+    // highlightColor: "#F0F0F0",
+    highlightColor: "red", 
     dark: {
-      themeColor: "#2C42FC", // #2D2D2D
-      textColor: "#FFF", // #FFF
-      backgroundColor: "#16182E", // #2D2D2D
-      highlightColor: "#08091B", // #FFF
-      borderColor: "#24263B",
+        themeColor: "#A5E547", // #2D2D2D
+        textColor: "#FFF", // #FFF
+        backgroundColor: "#2D2D2D", // #2D2D2D
+        highlightColor: "#08091B", // #FFF
+        borderColor: "#24263B",
     },
-    theme: 'dark',
+    theme: ThemeName.DARK,
     // roundness: 42,
-  },
+},
   origin: window.location.origin,
 
   apiKeys: {
