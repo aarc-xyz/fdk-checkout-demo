@@ -144,7 +144,7 @@ const config = {
   },
 }
 
-export const aarcModal = new AarcFundKitModal(config)
+export const aarcModal = new AarcFundKitModal(config, "dev")
 aarcModal.init()
 
 
