@@ -425,10 +425,10 @@ export default function SwapBox(props) {
   const toAmount = parseValue(toValue, toToken && toToken.decimals);
 
 
-  useEffect(() => {
-    aarcModal.updateDestinationWalletAddress(address || "")
-    aarcModal.updateDestinationToken(tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", chainId, +fromValue.toString())
-  }, [tokenSelection?.[swapOption].from, fromValue])
+  // useEffect(() => {
+  //   aarcModal.updateDestinationWalletAddress(address || "")
+  //   aarcModal.updateDestinationToken(tokenSelection?.[swapOption].from || "0xaf88d065e77c8cC2239327C5EDb3A432268e5831", chainId, +fromValue.toString())
+  // }, [tokenSelection?.[swapOption].from, fromValue])
 
 
   const isPotentialWrap = (fromToken.isNative && toToken.isWrapped) || (fromToken.isWrapped && toToken.isNative);
