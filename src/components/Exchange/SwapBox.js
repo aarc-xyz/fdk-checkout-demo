@@ -134,7 +134,7 @@ const config = {
         highlightColor: "#08091B", // #FFF
         borderColor: "#24263B",
     },
-    theme: ThemeName.DARK,
+    theme: 'dark',
     // roundness: 42,
 },
   origin: window.location.origin,
