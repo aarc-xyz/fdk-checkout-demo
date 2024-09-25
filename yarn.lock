@@ -5,10 +5,10 @@ __metadata:
   version: 5
   cacheKey: 8
 
-"@aarc-dev/fundkit-web-sdk@npm:0.1.4":
-  version: 0.1.4
-  resolution: "@aarc-dev/fundkit-web-sdk@npm:0.1.4"
-  checksum: 8917413bdece3dbb2f23524dc91aa5d886e291c4e39afe90248e2873f6db64e52b21bf7818ff6b9748939cc2a7bf02e8836c99f88d2edb66854737695e18873f
+"@aarc-dev/fundkit-web-sdk@npm:0.1.5":
+  version: 0.1.5
+  resolution: "@aarc-dev/fundkit-web-sdk@npm:0.1.5"
+  checksum: f954853f436dd82f51e819af3f542e2c9a955ca040e17c4d30103e702dee25ba26190437d73745c669db4d0f0596f6152a4569233abb4a22410625a3fe88085c
   languageName: node
   linkType: hard
 
@@ -11303,7 +11303,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "gambit-interface@workspace:."
   dependencies:
-    "@aarc-dev/fundkit-web-sdk": 0.1.4
+    "@aarc-dev/fundkit-web-sdk": 0.1.5
     "@aarc-xyz/fundkit-web-sdk": 0.0.1
     "@apollo/client": 3.5.6
     "@babel/plugin-proposal-private-property-in-object": 7.21.11
